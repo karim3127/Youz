@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2354a2</color>
+    <color name="colorPrimaryDark">#1a3e78</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="colorWhitePrimary">#FFFFFF</color>
+    <color name="colorWhitePrimaryDark">#e5e5e5</color>
+    <color name="colorWhiteAccent">#FFFFFF</color>
+
+    <color name="slider_color_0">#2354a2</color>
+    <color name="slider_color_1">#78CBBF</color>
+    <color name="slider_color_2">#5ABC6C</color>
+    <color name="slider_color_3">#44ADE2</color>
+    <color name="slider_color_4">#D64799</color>
+
+
+    <color name="colorIntroOrange">#f09c32</color>
+    <color name="colorIntroBlue">#49a3d5</color>
+    <color name="colorIntroGreen">#52b86f</color>
+    <color name="colorIntroRed">#df4f60</color>
+
+    <color name="colorPurple">#9a11db</color>
+    <color name="colorYallow">#e6bc0e</color>
+    <color name="colorGreen">#0db7c4</color>
+    <color name="colorGreenDark">#09726e</color>
+    <color name="colorBrow">#aaa58f</color>
+    <color name="colorRed">#f21454</color>
+    <color name="colorPink">#ce0b97</color>
+    <color name="colorTurquoise">#53dde0</color>
+
+    <color name="color1">#9912D8</color>
+    <color name="color2">#10B9C6</color>
+    <color name="color3">#B56CE0</color>
+    <color name="color4">#53DCE0</color>
+    <color name="color5">#E5BC0E</color>
+    <color name="color6">#077762</color>
+    <color name="color7">#0A9B72</color>
+    <color name="color8">#10E242</color>
+    <color name="color9">#0A726F</color>
+    <color name="color10">#CE0B97</color>
+    <color name="color11">#F45922</color>
+    <color name="color12">#83D622</color>
+    <color name="color13">#0D9E97</color>
+    <color name="color14">#D864C2</color>
+    <color name="color15">#A3BFBC</color>
+    <color name="color16">#724168</color>
+    <color name="color17">#0AEDC1</color>
+    <color name="color18">#0BAD7F</color>
+
+    <color name="colorBlack">#353535</color>
+    <color name="colorBlackLight">#5f5f5f</color>
+    <color name="colorGray">#9c9c9c</color>
+    <color name="colorGrayLight">#e6e6e5</color>
+
+    <color name="colorTransparent">#0fff</color>
+    <color name="colorSemiTransparent">#66000000</color>
+</resources>

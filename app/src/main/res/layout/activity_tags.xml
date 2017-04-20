@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.youz.android.activity.Tags">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:theme="@style/whiteStyle"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <TextView
+                android:id="@+id/tv_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:text="Tags"
+                android:textColor="#fff"
+                android:textSize="@dimen/text_medium_size"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_search_white"
+                android:padding="18dp"/>
+
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/iv_go_back"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:padding="20dp"
+                    android:src="@drawable/ic_go_back_left_blue"/>
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginLeft="24dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:background="#0fff"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorGray"
+                    android:hint="Search" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_centerInParent="true"
+            android:id="@+id/avloadingIndicatorView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:indicator="BallPulse"
+            app:indicator_color="@color/colorPrimary" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_tags"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:scrollbars="none"
+            android:overScrollMode="never" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/rv_search_tags"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:scrollbars="none"
+            android:overScrollMode="never" />
+
+        <RelativeLayout
+            android:id="@+id/rl_no_tags"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="#D1D1D1">
+
+            <TextView
+                android:id="@+id/txtNo"
+                android:layout_above="@+id/imgCenter"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="center"
+                android:text="You don’t have any tags"
+                android:textSize="@dimen/text_large_size"
+                android:textColor="#949494" />
+
+            <ImageView
+                android:id="@+id/imgCenter"
+                android:layout_centerInParent="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_no" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

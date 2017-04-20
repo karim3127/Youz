@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_margin="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No more posts"
+            android:textColor="@color/colorGray"
+            android:gravity="center"
+            android:textSize="@dimen/text_normal_size"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtCnx"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connexion is down"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="@dimen/text_normal_size"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

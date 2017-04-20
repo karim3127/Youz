@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+
+    <TextView
+        android:id="@+id/tv_comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/write_sub_comment"
+        android:textSize="@dimen/text_medium_size"
+        android:textColor="@color/colorPrimary"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        card_view:cardBackgroundColor="@color/colorAccent"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f5f5f5">
+
+            <EditText
+                android:id="@+id/et_sub_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/img_send"
+                android:hint="@string/edit_SubComment"
+                android:textColorHint="@color/colorGray"
+                android:textColor="@color/colorBlackLight"
+                android:background="#0FFF"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_normal_size"
+                android:padding="8dp"
+                android:maxLines="3"
+                android:minHeight="48dp" />
+
+            <ImageView
+                android:id="@+id/img_send_sub_comment"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_send_blue"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:padding="8dp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

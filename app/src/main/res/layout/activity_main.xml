@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:background="@color/colorGrayLight">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_scrollFlags="scroll|enterAlways" >
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+                    </android.support.v7.widget.Toolbar>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="bottom"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_home_friends" />
+
+                            <TextView
+                                android:id="@+id/tv_nb_friend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="#fff"
+                                android:textSize="@dimen/text_small_medium_size" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:src="@drawable/ic_logo_header"
+                            android:layout_centerInParent="true"/>
+
+                        <ImageView
+                            android:id="@+id/img_tags"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:src="@drawable/ic_home_tags"
+                            android:layout_alignParentRight="true"
+                            android:padding="18dp" />
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:id="@+id/img_setting"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:src="@drawable/ic_home_setting"
+                            android:layout_alignParentRight="true"
+                            android:padding="18dp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <com.youz.android.view.NonSwipeableViewPager
+                android:id="@+id/vp_home"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="?attr/actionBarSize"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/shadow"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="?attr/actionBarSize" />
+
+    <LinearLayout
+        android:id="@+id/ll_menu"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/ll_recent"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_recent"
+                android:layout_width="28dp"
+                android:layout_height="32dp"
+                android:src="@drawable/home_recent_state"/>
+
+            <View
+                android:id="@+id/v_index_recent"
+                android:layout_width="32dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/back_home_index" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/ll_message"
+                android:layout_centerInParent="true"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_message"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/home_message_state"/>
+
+                <View
+                    android:id="@+id/v_index_message"
+                    android:layout_width="32dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/back_home_index" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_badge_msg"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text=""
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:background="@drawable/circle_red_w"
+                android:textSize="@dimen/text_small_size"
+                android:layout_marginTop="8dp"
+                android:layout_alignTop="@+id/ll_message"
+                android:layout_alignLeft="@+id/ll_message"
+                android:layout_marginLeft="8dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_add_new"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_home_add_new"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/ll_notif"
+                android:layout_centerInParent="true"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_notif"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/home_notif_state"/>
+
+                <View
+                    android:id="@+id/v_index_notif"
+                    android:layout_width="32dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/back_home_index" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_badge_notif"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text=""
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:background="@drawable/circle_red_w"
+                android:textSize="@dimen/text_small_size"
+                android:layout_marginTop="8dp"
+                android:layout_alignTop="@+id/ll_notif"
+                android:layout_alignLeft="@+id/ll_notif"
+                android:layout_marginLeft="10dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_profil"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_profil"
+                android:layout_width="28dp"
+                android:layout_height="32dp"
+                android:src="@drawable/home_profil_state"/>
+
+            <View
+                android:id="@+id/v_index_profil"
+                android:layout_width="32dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/back_home_index" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

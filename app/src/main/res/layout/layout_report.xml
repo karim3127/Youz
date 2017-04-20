@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+
+    <com.rey.material.widget.RadioButton
+        android:id="@+id/rb1"
+        style="@style/Material.Drawable.RadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:text="Spam"
+        android:textSize="@dimen/text_medium_size"
+        app:rbd_strokeColor="@color/radio_color_state_list"
+        android:checked="false"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="16dp" />
+
+    <com.rey.material.widget.RadioButton
+        android:id="@+id/rb2"
+        style="@style/Material.Drawable.RadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:text="Hate speech or violence"
+        android:textSize="@dimen/text_medium_size"
+        app:rbd_strokeColor="@color/radio_color_state_list"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="16dp" />
+
+    <com.rey.material.widget.RadioButton
+        android:id="@+id/rb3"
+        style="@style/Material.Drawable.RadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:text="Nudity or pornography"
+        android:textSize="@dimen/text_medium_size"
+        app:rbd_strokeColor="@color/radio_color_state_list"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="16dp" />
+
+    <com.rey.material.widget.RadioButton
+        android:id="@+id/rb4"
+        style="@style/Material.Drawable.RadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:text="Piracy"
+        android:textSize="@dimen/text_medium_size"
+        app:rbd_strokeColor="@color/radio_color_state_list"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp" />
+
+
+</LinearLayout>

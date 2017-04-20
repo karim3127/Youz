@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.youz.android.activity.BlocksList">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:theme="@style/whiteStyle"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <TextView
+                android:id="@+id/tv_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:text="Blocks list"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_marginRight="56dp"
+                android:layout_marginLeft="56dp"
+                android:textColor="#fff"
+                android:textSize="@dimen/text_medium_size"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_centerInParent="true"
+            android:id="@+id/avloadingIndicatorView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:indicator="BallPulse"
+            app:indicator_color="@color/colorPrimary" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_blocks"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:scrollbars="none"
+            android:overScrollMode="never" />
+
+        <RelativeLayout
+            android:id="@+id/rl_no_blocks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="#D1D1D1">
+
+            <TextView
+                android:id="@+id/txtNo"
+                android:layout_above="@+id/imgCenter"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="center"
+                android:text="You don’t have any block user"
+                android:textSize="@dimen/text_large_size"
+                android:textColor="#949494" />
+
+            <ImageView
+                android:id="@+id/imgCenter"
+                android:layout_centerInParent="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_no" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

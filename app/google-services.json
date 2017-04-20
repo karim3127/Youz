@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "445498718655",
+    "firebase_url": "https://youz-a86c5.firebaseio.com",
+    "project_id": "youz-a86c5",
+    "storage_bucket": "youz-a86c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445498718655:android:e157de61b12e77db",
+        "android_client_info": {
+          "package_name": "com.youz.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445498718655-2mk08rmmr16pee748hbutrn37hkj8u9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youz.android",
+            "certificate_hash": "0CCFAFE47751A845C2ED59D518A200E269B77AA5"
+          }
+        },
+        {
+          "client_id": "445498718655-s1cl7moiu5jqcmscmqd26vc2sd0ughqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYI3EL6AjxgEY-LY1yQotVZSs-aYx__sU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445498718655-3g1b5arv5kcth9kv4mo6v2ekkhqgcj2v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Asmoutcha.Youz"
+              }
+            },
+            {
+              "client_id": "445498718655-s1cl7moiu5jqcmscmqd26vc2sd0ughqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

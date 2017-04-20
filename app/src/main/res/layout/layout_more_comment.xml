@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/ll_sub_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_sub_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/AddsubComment"
+            android:textSize="@dimen/text_normal_size"
+            android:textColor="#000"
+            android:gravity="center_vertical"
+            android:padding="16dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGrayLight" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Reportcomment"
+        android:textSize="@dimen/text_normal_size"
+        android:textColor="#000"
+        android:gravity="center_vertical"
+        android:padding="16dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorGrayLight" />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Deletecomment"
+        android:textSize="@dimen/text_normal_size"
+        android:textColor="#000"
+        android:gravity="center_vertical"
+        android:padding="16dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorGrayLight" />
+
+    <TextView
+        android:id="@+id/tv_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Blockuser"
+        android:visibility="gone"
+        android:textSize="@dimen/text_normal_size"
+        android:textColor="#000"
+        android:gravity="center_vertical"
+        android:padding="16dp" />
+
+
+</LinearLayout>
