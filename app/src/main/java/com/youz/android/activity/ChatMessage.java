@@ -32,7 +32,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -72,7 +71,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -130,8 +128,7 @@ public class ChatMessage extends BaseActivity {
     boolean isAbleToSend = false;
     SharedPreferences prefs;
     String userId;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
-    TimeZone timeZone = TimeZone.getTimeZone("UTC");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     private DatabaseReference mMessageRef;
@@ -146,7 +143,6 @@ public class ChatMessage extends BaseActivity {
     int nbMsgMore;
     String lastId = "";
     private MenuItem blockItem;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -188,7 +184,7 @@ public class ChatMessage extends BaseActivity {
         connectionDetector = new ConnectionDetector(this);
         prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         userId = prefs.getString("UserId", "");
-        format.setTimeZone(timeZone);
+        format.setTimeZone(TimeZone.getDefault());
 
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -327,13 +323,28 @@ public class ChatMessage extends BaseActivity {
                         Pair<String, HashMap<String, Object>> item = new Pair<>(msg.getKey(), (HashMap<String, Object>) msg.getValue());
                         listItems.add(item);
                     }
-
+                    
                     Collections.sort(listItems, new Comparator<Pair<String, HashMap<String, Object>>>() {
                         @Override
                         public int compare(Pair<String, HashMap<String, Object>> c1, Pair<String, HashMap<String, Object>> c2) {
                             String date1 = (String) c1.second.get("dateSent");
                             String date2 = (String) c2.second.get("dateSent");
-                            return date1.compareTo(date2);
+
+                            Date dateValue1 = null;
+                            try {
+                                dateValue1 = format.parse(date1);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            Date dateValue2 = null;
+                            try {
+                                dateValue2 = format.parse(date2);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            return dateValue1.compareTo(dateValue2);
                         }
                     });
 
@@ -439,14 +450,38 @@ public class ChatMessage extends BaseActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getValue() != null) {
 
-                    final Pair<String, HashMap<String, Object>> msg = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
-                    String lastId = (adapter.getItemCount() > 0) ? adapter.listItems.get(adapter.getItemCount() - 1).first : "";
-                    if (!lastId.equals(msg.first)) {
-
-                        adapter.addOnBottom(msg);
-                        scrollDown();
+                    Date dateDelete = null;
+                    try {
+                        dateDelete = format.parse(chatDeletes);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                    avloadingIndicatorView.setVisibility(View.GONE);
+
+                    String dateMsg = (String) ((HashMap<String, Object>) dataSnapshot.getValue()).get("dateSent");
+
+                    Date dateValueMsg = null;
+                    try {
+                        dateValueMsg = format.parse(dateMsg);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    boolean exist = false;
+                    for (int i = adapter.getItemCount() - 1; i >= 0; i--) {
+                        if (adapter.listItems.get(i).first.equals(dataSnapshot.getKey())) {
+                            exist = true;
+                        }
+                    }
+
+                    if ((dateDelete == null || dateValueMsg.compareTo(dateDelete) > 0) && !exist) {
+                        final Pair<String, HashMap<String, Object>> msg = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
+                        String lastId = (adapter.getItemCount() > 0) ? adapter.listItems.get(adapter.getItemCount() - 1).first : "";
+                        if (!lastId.equals(msg.first)) {
+
+                            adapter.addOnBottom(msg);
+                            scrollDown();
+                        }
+                    }
                 }
             }
 
@@ -498,7 +533,22 @@ public class ChatMessage extends BaseActivity {
                         public int compare(Pair<String, HashMap<String, Object>> c1, Pair<String, HashMap<String, Object>> c2) {
                             String date1 = (String) c1.second.get("dateSent");
                             String date2 = (String) c2.second.get("dateSent");
-                            return date1.compareTo(date2);
+
+                            Date dateValue1 = null;
+                            try {
+                                dateValue1 = format.parse(date1);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            Date dateValue2 = null;
+                            try {
+                                dateValue2 = format.parse(date2);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            return dateValue1.compareTo(dateValue2);
                         }
                     });
 

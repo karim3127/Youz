@@ -373,7 +373,7 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this, "no user", Toast.LENGTH_SHORT).show();
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
-                    format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    format.setTimeZone(TimeZone.getDefault());
                     String date_createdAt = format.format(new Date());
 
                     HashMap<String, Object> result = new HashMap<>();

@@ -297,7 +297,7 @@ public class PostDetails extends BaseActivity {
                     nbLikes++;
                     tvNbFav.setText(nbLikes + "");
                 } else {
-                    Toast.makeText(PostDetails.this, "Connexion is down", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostDetails.this, getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -318,7 +318,7 @@ public class PostDetails extends BaseActivity {
                     nbLikes--;
                     tvNbFav.setText(nbLikes + "");
                 } else {
-                    Toast.makeText(PostDetails.this, "Connexion is down", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostDetails.this, getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -356,7 +356,7 @@ public class PostDetails extends BaseActivity {
                     if (connectionDetector.isConnectingToInternet()) {
                         reyouzPost();
                     } else {
-                        Toast.makeText(PostDetails.this, "Connexion is down", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostDetails.this, getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                     }
                 } else if (id == R.id.action_share) {
                     startActivity(new Intent(context, PostShare.class));
@@ -391,7 +391,7 @@ public class PostDetails extends BaseActivity {
                         }
 
                     } else {
-                        Toast.makeText(PostDetails.this, "Connexion is down", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostDetails.this, getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                     }
                 } else if (id == R.id.action_delete) {
                     deletePost();
@@ -420,7 +420,7 @@ public class PostDetails extends BaseActivity {
             }
 
         } else {
-            Toast.makeText(this, "Connexion is down", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
         }
     }
 

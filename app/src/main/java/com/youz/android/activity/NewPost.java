@@ -283,9 +283,8 @@ public class NewPost extends BaseActivity {
 
         try {
             listImages = getAllShownImagesPath();
-        } catch (Exception e) {
+        } catch (Exception e) {}
 
-        }
         listImages.add(0, "");
 
         rvPhoto.setHasFixedSize(true);
