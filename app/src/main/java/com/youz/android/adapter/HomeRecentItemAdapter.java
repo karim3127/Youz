@@ -40,7 +40,6 @@ import com.onesignal.OneSignal;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
-import com.youz.android.activity.MainActivity;
 import com.youz.android.activity.PostDetails;
 import com.youz.android.activity.PostShare;
 import com.youz.android.activity.Tags;
@@ -694,6 +693,9 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         block.put("createdAt", dateBlocks);
 
                         DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(postOwner);
+                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(postOwner).child(userId);
+
+                        mBlockingRef.updateChildren(block);
                         mBlocksRef.updateChildren(block, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

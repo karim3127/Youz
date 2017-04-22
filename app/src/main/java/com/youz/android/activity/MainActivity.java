@@ -14,8 +14,11 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -110,6 +113,7 @@ public class MainActivity extends BaseActivity {
     View vBlockOption;
 
     public static List<String> listYouzBlocks = new ArrayList<>();
+    public static List<String> listContactBlocking = new ArrayList<>();
     public static TextView tvBadgeMsg, tvBadgeNotif;
     public static Context context;
     public static String locale;
@@ -124,13 +128,16 @@ public class MainActivity extends BaseActivity {
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mBlocksRef;
+    DatabaseReference mBlockingRef;
 
     private ValueEventListener valueEventListener;
+    private ValueEventListener valueEventListenerBlocking;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private String userId;
     private String defaultLangage;
     private Boolean theLanguageisEnglish = true;
+    private LocalBroadcastManager broadcaster;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,6 +158,7 @@ public class MainActivity extends BaseActivity {
         editor = prefs.edit();
         userId = prefs.getString("UserId", "");
         defaultLangage = prefs.getString("Langage","en");
+        broadcaster = LocalBroadcastManager.getInstance(this);
 
         if (defaultLangage.equals("ar") || defaultLangage.equals("wi")) {
             theLanguageisEnglish = false;
@@ -161,12 +169,14 @@ public class MainActivity extends BaseActivity {
         mBlocksRef = mRootRef.getReference("blocks/" + userId);
         getBlockContacts();
 
+        mBlockingRef = mRootRef.getReference("blocking/" + userId);
+        getBlockingContacts();
+
         tvBadgeMsg = (TextView) findViewById(R.id.tv_badge_msg);
         tvBadgeNotif = (TextView) findViewById(R.id.tv_badge_notif);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
-           // Toast.makeText(getApplicationContext(),""+city+" "+locale,Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
@@ -193,6 +203,12 @@ public class MainActivity extends BaseActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     if (anchorView != null) {
+                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                anchorView = null;
+                            }
+                        }, 300);
                         mToolTipsManager.findAndDismiss(anchorView);
                     }
                     vBlockOption.setVisibility(View.GONE);
@@ -209,18 +225,19 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.iv_friend)
     public void showNbFriend() {
-        if (anchorView != null) {
+        if (anchorView == null) {
+            anchorView = ivFriend;
+            String nbFriends = (tvNbFriend.getText().toString().isEmpty()) ? "0" : tvNbFriend.getText().toString();
+            ToolTip.Builder builder = new ToolTip.Builder(this, ivFriend, mainActivity, getResources().getString(R.string.friends_number) + " " + nbFriends, ToolTip.POSITION_BELOW);
+            builder.setAlign(ToolTip.ALIGN_LEFT);
+            builder.setBackgroundColor(getResources().getColor(R.color.colorGrayLight));
+            builder.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mToolTipsManager.show(builder.build());
+            vBlockOption.setVisibility(View.VISIBLE);
+            ivFriend.setEnabled(false);
+        } else {
             mToolTipsManager.findAndDismiss(anchorView);
         }
-        anchorView = ivFriend;
-        String nbFriends = (tvNbFriend.getText().toString().isEmpty()) ? "0" : tvNbFriend.getText().toString();
-        ToolTip.Builder builder = new ToolTip.Builder(this, ivFriend, mainActivity, getResources().getString(R.string.friends_number) + " " + nbFriends, ToolTip.POSITION_BELOW);
-        builder.setAlign(ToolTip.ALIGN_LEFT);
-        builder.setBackgroundColor(getResources().getColor(R.color.colorGrayLight));
-        builder.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mToolTipsManager.show(builder.build());
-        vBlockOption.setVisibility(View.VISIBLE);
-        ivFriend.setEnabled(false);
     }
 
     @OnClick(R.id.ll_menu)
@@ -369,7 +386,9 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         context = null;
         listYouzBlocks = new ArrayList<>();
+        listContactBlocking = new ArrayList<>();
         mBlocksRef.removeEventListener(valueEventListener);
+        mBlockingRef.removeEventListener(valueEventListenerBlocking);
         super.onDestroy();
     }
 
@@ -450,6 +469,7 @@ public class MainActivity extends BaseActivity {
                             homeProfilLikedFragment.notifyBlockPost();
                         }
                     }
+                    sendMessageResult("Block");
                 }
             }
 
@@ -459,6 +479,31 @@ public class MainActivity extends BaseActivity {
             }
         };
         mBlocksRef.addValueEventListener(valueEventListener);
+    }
+
+    public void getBlockingContacts() {
+        valueEventListenerBlocking = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    HashMap<String, Object> blocks = (HashMap<String, Object>) dataSnapshot.getValue();
+                    listContactBlocking.clear();
+                    for (Map.Entry<String, Object> block : blocks.entrySet()) {
+                        if (!listContactBlocking.contains(block.getKey())) {
+                            listContactBlocking.add(block.getKey());
+                        }
+                    }
+
+                    sendMessageResult("Block");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mBlockingRef.addValueEventListener(valueEventListenerBlocking);
     }
 
     public class FixedSpeedScroller extends Scroller {
@@ -605,6 +650,14 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }*/
+    }
+
+    public void sendMessageResult(String message) {
+        Intent intent = new Intent(ChatMessage.COPA_RESULT);
+        if(message != null) {
+            intent.putExtra(ChatMessage.COPA_MESSAGE, message);
+        }
+        broadcaster.sendBroadcast(intent);
     }
 
 }

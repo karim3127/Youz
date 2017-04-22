@@ -2,9 +2,11 @@ package com.youz.android.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +18,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,6 +84,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ChatMessage extends BaseActivity {
 
+    static final public String COPA_RESULT = "SETTING.REQUEST_RESULT";
+    static final public String COPA_MESSAGE = "SETTING.COPA_MESSAGE";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -122,7 +128,7 @@ public class ChatMessage extends BaseActivity {
             .build();
 
     private String chatId, privateId, chatDeletes;
-    boolean hasMessage, isBlocked, hasBlock;
+    boolean hasMessage, isBlocked = false, hasBlock = false;
     ConnectionDetector connectionDetector;
     private MessageItemAdapter adapter;
     boolean isAbleToSend = false;
@@ -139,6 +145,7 @@ public class ChatMessage extends BaseActivity {
     private ChildEventListener childEventListenerNewMessage;
     private ValueEventListener valueEventListenerUser;
 
+    private BroadcastReceiver receiver;
     public static DataSnapshot dataSnapshotUser;
     int nbMsgMore;
     String lastId = "";
@@ -161,8 +168,9 @@ public class ChatMessage extends BaseActivity {
         privateId = getIntent().getExtras().getString("PrivateId", "");
         chatDeletes = getIntent().getExtras().getString("ChatDeletes", "");
         hasMessage = getIntent().getExtras().getBoolean("HasMessage", false);
-        isBlocked = getIntent().getExtras().getBoolean("IsBlocked", false);
-        hasBlock = getIntent().getExtras().getBoolean("HasBlock", false);
+
+        hasBlock = MainActivity.listYouzBlocks.contains(privateId);
+        isBlocked = MainActivity.listContactBlocking.contains(privateId);
 
         if (isBlocked || hasBlock) {
             imgAttach.setEnabled(false);
@@ -247,6 +255,38 @@ public class ChatMessage extends BaseActivity {
 
         getMessageChat();
         getMemberDetail();
+
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, final Intent intent) {
+                String mMessage = intent.getExtras().getString(COPA_MESSAGE, "");
+
+                if (mMessage.equals("Block")) {
+                    hasBlock = MainActivity.listYouzBlocks.contains(privateId);
+                    isBlocked = MainActivity.listContactBlocking.contains(privateId);
+
+                    if (isBlocked || hasBlock) {
+                        imgAttach.setEnabled(false);
+                        etMessage.setEnabled(false);
+                        imgSend.setEnabled(false);
+
+                        View viewFocus = getCurrentFocus();
+                        if (viewFocus != null) {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(viewFocus.getWindowToken(), 0);
+                            etMessage.clearFocus();
+                        }
+
+                    } else {
+                        imgAttach.setEnabled(true);
+                        etMessage.setEnabled(true);
+                        imgSend.setEnabled(true);
+                    }
+                }
+            }
+        };
+
     }
 
     @OnClick(R.id.img_attach)
@@ -269,7 +309,14 @@ public class ChatMessage extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver), new IntentFilter(COPA_RESULT));
+    }
+
+    @Override
     protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         mMessageRef.removeEventListener(childEventListenerMessageModification);
         mNewMessageQuery.removeEventListener(childEventListenerNewMessage);
         mUserRef.removeEventListener(valueEventListenerUser);
@@ -866,15 +913,25 @@ public class ChatMessage extends BaseActivity {
                 //do your work here
                 if (connectionDetector.isConnectingToInternet()) {
 
-                    mRootRef.getReference("chats").child(chatId + "/blocks/" + privateId).removeValue();
-                    hasBlock = false;
-                    Toast.makeText(context, "User deblocked", Toast.LENGTH_SHORT).show();
+                    DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
+                    DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
 
-                    imgAttach.setEnabled(true);
-                    etMessage.setEnabled(true);
-                    imgSend.setEnabled(true);
+                    mBlockingRef.removeValue();
+                    mBlocksRef.removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError == null) {
+                                hasBlock = false;
+                                Toast.makeText(context, "User deblocked", Toast.LENGTH_SHORT).show();
 
-                    blockItem.setTitle("Block user");
+                                imgAttach.setEnabled(true);
+                                etMessage.setEnabled(true);
+                                imgSend.setEnabled(true);
+
+                                blockItem.setTitle("Block user");
+                            }
+                        }
+                    });
 
                 } else {
                     Toast.makeText(context, "Connexion is down", Toast.LENGTH_SHORT).show();
@@ -921,14 +978,31 @@ public class ChatMessage extends BaseActivity {
 
                     String toastMsg;
                     if (hasBlock) {
-                        mRootRef.getReference("chats").child(chatId + "/blocks/" + privateId).removeValue();
+
+                        DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
+                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
+
+                        mBlockingRef.removeValue();
+                        mBlocksRef.removeValue();
+
                         toastMsg = "User deblocked";
                     } else {
+                        final String dateBlocks = format.format(new Date());
+                        String postId = chatId.replace(userId, "");
+                        postId = postId.replace(privateId, "");
+
+                        HashMap<String, Object> block = new HashMap<>();
+                        block.put("postId", postId);
+                        block.put("createdAt", dateBlocks);
+
+                        DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
+                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
+
+                        mBlockingRef.updateChildren(block);
+                        mBlocksRef.updateChildren(block);
+
                         toastMsg = "User blocked";
 
-                        HashMap<String, Object> chatDeletes = new HashMap<>();
-                        chatDeletes.put(privateId, true);
-                        mRootRef.getReference("chats").child(chatId + "/blocks").updateChildren(chatDeletes);
                     }
                     Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
                     hasBlock = !hasBlock;

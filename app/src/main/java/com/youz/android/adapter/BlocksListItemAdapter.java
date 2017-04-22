@@ -230,6 +230,9 @@ public class BlocksListItemAdapter extends RecyclerView.Adapter<BlocksListItemAd
                     if (connectionDetector.isConnectingToInternet()) {
 
                         DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(blockUserId);
+                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(blockUserId).child(userId);
+
+                        mBlockingRef.removeValue();
                         mBlocksRef.removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

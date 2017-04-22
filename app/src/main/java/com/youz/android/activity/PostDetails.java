@@ -1943,6 +1943,9 @@ public class PostDetails extends BaseActivity {
                     block.put("createdAt", dateBlocks);
 
                     DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(postOwner);
+                    DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(postOwner).child(userId);
+
+                    mBlockingRef.updateChildren(block);
                     mBlocksRef.updateChildren(block, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
