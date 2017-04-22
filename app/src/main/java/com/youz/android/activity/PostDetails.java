@@ -890,6 +890,8 @@ public class PostDetails extends BaseActivity {
             final String commentId = listSortedComment.get(i).first;
             final HashMap<String, Object> itemDetails = listSortedComment.get(i).second;
 
+            final String commentOwner = (String) itemDetails.get("commentOwner");
+
             final View viewComment = LayoutInflater.from(this).inflate(R.layout.rv_comment_item, null);
             TextView tvCommentText = (TextView) viewComment.findViewById(R.id.tv_comment_text);
             TextView tvCommentDate = (TextView) viewComment.findViewById(R.id.tv_comment_date);
@@ -1063,7 +1065,7 @@ public class PostDetails extends BaseActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            showSubCommentDialog(commentId, llSubComment);
+                            showSubCommentDialog(commentId, commentOwner, llSubComment);
                         }
                     });
 
@@ -1304,7 +1306,7 @@ public class PostDetails extends BaseActivity {
         }
     }
 
-    public void showSubCommentDialog(final String commentId, final LinearLayout layoutComment) {
+    public void showSubCommentDialog(final String commentId, final String commentOwner, final LinearLayout layoutComment) {
 
         View viewSubComment = getLayoutInflater().inflate(R.layout.layout_new_sub_comment, null);
 
@@ -1325,7 +1327,59 @@ public class PostDetails extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (etSubComment.getText().toString().trim().length() > 0) {
+
                     addSubComment(etSubComment.getText().toString().trim(), commentId, layoutComment);
+
+                    if (!commentOwner.equals(userId)) {
+                        final String dateSent = format.format(new Date());
+
+                        HashMap<String, Object> alert = new HashMap<>();
+                        alert.put("createdAt", dateSent);
+                        alert.put("postId", currentPost.first);
+                        alert.put("type", "reply");
+                        alert.put("userId", userId);
+
+                        DatabaseReference mAlertReplyRef = mRootRef.getReference("alerts").child(commentOwner);
+
+                        String alertId = mAlertReplyRef.push().getKey();
+                        HashMap<String, Object> alertItem = new HashMap<>();
+                        alertItem.put(alertId, alert);
+
+                        mAlertReplyRef.updateChildren(alertItem);
+
+                        DatabaseReference mUserCommentOwnerRef = mRootRef.getReference("users").child(commentOwner);
+                        ValueEventListener valueEventListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.getValue() != null) {
+
+                                    HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshot.getValue();
+                                    if ((boolean) membersDetails.get("notifsComments") && membersDetails.get("status").equals("offline")) {
+                                        List<String> userIds = new ArrayList<>();
+                                        if (membersDetails.get("oneSignalUserId") != null) {
+                                            userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
+                                        }
+
+                                        String messagePush = "Replied to your comment";
+                                        String userIdsList = userIds.toString();
+                                        try {
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        };
+                        mUserCommentOwnerRef.addListenerForSingleValueEvent(valueEventListener);
+
+                    }
+
                     alert.dismiss();
                 }
             }

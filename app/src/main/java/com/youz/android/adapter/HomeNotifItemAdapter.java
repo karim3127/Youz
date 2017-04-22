@@ -104,6 +104,9 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
         } else if (type.equals("comment")) {
             holder.tvTitle.setText(""+context.getString(R.string.notif_comment));
             holder.ivLike.setVisibility(View.GONE);
+        } else  if (type.equals("reply")) {
+            holder.tvTitle.setText(""+context.getString(R.string.notif_reply));
+            holder.ivLike.setVisibility(View.GONE);
         } else if (type.equals("share")) {
             holder.tvTitle.setText(""+context.getString(R.string.notif_share));
             holder.ivLike.setVisibility(View.GONE);

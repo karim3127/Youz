@@ -57,6 +57,7 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'me.relex:circleindicator:1.1.8@aar'
+    compile 'com.tomergoldst.android:tooltips:1.0.6'
 
     compile 'com.alexvasilkov:gesture-views:2.1.1'
     compile 'com.github.aakira:expandable-layout:1.4.2@aar'

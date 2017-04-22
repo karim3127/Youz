@@ -11,8 +11,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,17 +18,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tomergoldst.tooltips.ToolTip;
+import com.tomergoldst.tooltips.ToolTipsManager;
 import com.youz.android.R;
 import com.youz.android.adapter.PagerHomeAdapter;
 import com.youz.android.fragment.HomeProfilLikedFragment;
@@ -59,6 +60,9 @@ public class MainActivity extends BaseActivity {
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 21;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 22;
     private static final int PERMISSIONS_REQUEST_CODE_PICK_CONTACTS = 23;
+
+    @BindView(R.id.main_activity)
+    RelativeLayout mainActivity;
 
     @BindView(R.id.img_recent)
     ImageView imgRecent;
@@ -98,6 +102,12 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.tv_nb_friend)
     public TextView tvNbFriend;
+
+    @BindView(R.id.iv_friend)
+    public ImageView ivFriend;
+
+    @BindView(R.id.v_block_option)
+    View vBlockOption;
 
     public static List<String> listYouzBlocks = new ArrayList<>();
     public static TextView tvBadgeMsg, tvBadgeNotif;
@@ -177,6 +187,40 @@ public class MainActivity extends BaseActivity {
         } catch (IllegalArgumentException e) {
         } catch (IllegalAccessException e) {
         }
+
+        vBlockOption.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (anchorView != null) {
+                        mToolTipsManager.findAndDismiss(anchorView);
+                    }
+                    vBlockOption.setVisibility(View.GONE);
+                    ivFriend.setEnabled(true);
+                }
+                return false;
+            }
+        });
+    }
+
+
+    ToolTipsManager mToolTipsManager = new ToolTipsManager();
+    View anchorView;
+
+    @OnClick(R.id.iv_friend)
+    public void showNbFriend() {
+        if (anchorView != null) {
+            mToolTipsManager.findAndDismiss(anchorView);
+        }
+        anchorView = ivFriend;
+        String nbFriends = (tvNbFriend.getText().toString().isEmpty()) ? "0" : tvNbFriend.getText().toString();
+        ToolTip.Builder builder = new ToolTip.Builder(this, ivFriend, mainActivity, getResources().getString(R.string.friends_number) + " " + nbFriends, ToolTip.POSITION_BELOW);
+        builder.setAlign(ToolTip.ALIGN_LEFT);
+        builder.setBackgroundColor(getResources().getColor(R.color.colorGrayLight));
+        builder.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mToolTipsManager.show(builder.build());
+        vBlockOption.setVisibility(View.VISIBLE);
+        ivFriend.setEnabled(false);
     }
 
     @OnClick(R.id.ll_menu)

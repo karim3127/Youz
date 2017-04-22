@@ -37,6 +37,7 @@
 
     <string name="facebook_app_id">1840788659523032</string>
 
+    <string name="friends_number">Friends number :</string>
     <string name="gps_in_setting">GPS is settings</string>
     <string name="gps_not_work">GPS is not enabled. Do you want to go to settings menu?</string>
     <string name="Settings">Settings</string>
@@ -80,6 +81,7 @@
     <string name="dialog_message_delete_dialog">Would you like to delete ?</string>
     <string name="notif_like">Liked your post</string>
     <string name="notif_comment">Commented your post</string>
+    <string name="notif_reply">Replied to your comment</string>
     <string name="notif_share">Sahred your post</string>
     <string name="Delete_image">Delete message</string>
     <string name="Download_image">Download image</string>

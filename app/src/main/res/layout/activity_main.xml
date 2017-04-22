@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
@@ -45,18 +46,20 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="bottom"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="8dp">
+                            android:layout_centerVertical="true">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:id="@+id/iv_friend"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
                                 android:src="@drawable/ic_home_friends" />
 
                             <TextView
                                 android:id="@+id/tv_nb_friend"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:paddingBottom="8dp"
                                 android:text=""
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_small_medium_size" />
@@ -273,5 +276,10 @@
 
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/v_block_option"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

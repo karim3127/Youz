@@ -88,6 +88,9 @@
                     android:textColorHint="@color/colorAccent"
                     android:textColor="@color/colorAccent"
                     android:background="#0FFF"
+                    android:maxLines="7"
+                    android:maxLength="240"
+                    android:isScrollContainer="false"
                     android:gravity="center"
                     android:textSize="@dimen/text_large_size"
                     android:padding="12dp" />

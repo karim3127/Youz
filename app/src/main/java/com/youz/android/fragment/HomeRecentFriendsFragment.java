@@ -17,7 +17,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -192,15 +191,12 @@ public class HomeRecentFriendsFragment extends Fragment {
 
                         try {
                             ((MainActivity) getActivity()).tvNbFriend.setText(listYouzContactsCuurent.size() + "");
-                            Log.e("mycontact",listYouzContactsCuurent+"  "+MyNumber.replace(" ",""));
                         } catch (Exception e) {
 
                         }
 
                         HashMap<String, Object> newContact = new HashMap<>();
                         newContact.put(dataSnapshot.getKey(), true);
-                        Log.e("uuu", dataSnapshot.getKey() + "");
-
                         mContactRef.updateChildren(newContact);
                     }
                 }
