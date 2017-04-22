@@ -145,6 +145,9 @@ public class ChatMessage extends BaseActivity {
     private ChildEventListener childEventListenerNewMessage;
     private ValueEventListener valueEventListenerUser;
 
+    DatabaseReference mBlockingRef;
+    private ValueEventListener valueEventListenerBlocking;
+
     private BroadcastReceiver receiver;
     public static DataSnapshot dataSnapshotUser;
     int nbMsgMore;
@@ -170,7 +173,11 @@ public class ChatMessage extends BaseActivity {
         hasMessage = getIntent().getExtras().getBoolean("HasMessage", false);
 
         hasBlock = MainActivity.listYouzBlocks.contains(privateId);
-        isBlocked = MainActivity.listContactBlocking.contains(privateId);
+
+        connectionDetector = new ConnectionDetector(this);
+        prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
+        userId = prefs.getString("UserId", "");
+        format.setTimeZone(TimeZone.getDefault());
 
         if (isBlocked || hasBlock) {
             imgAttach.setEnabled(false);
@@ -186,13 +193,11 @@ public class ChatMessage extends BaseActivity {
         mMessageQuery = mRootRef.getReference("messages").child(chatId).orderByChild("dateSent").limitToLast(20);
         mNewMessageQuery = mRootRef.getReference("messages").child(chatId).limitToLast(1);
 
+        mBlockingRef = mRootRef.getReference("blocks/" + privateId + "/" + userId);
+        checkBlockingContacts();
+
         int res = UtilUserAvatar.getDrawableRes(this, privateId);
         ivUser.setImageResource(res);
-
-        connectionDetector = new ConnectionDetector(this);
-        prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
-        userId = prefs.getString("UserId", "");
-        format.setTimeZone(TimeZone.getDefault());
 
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -264,7 +269,6 @@ public class ChatMessage extends BaseActivity {
 
                 if (mMessage.equals("Block")) {
                     hasBlock = MainActivity.listYouzBlocks.contains(privateId);
-                    isBlocked = MainActivity.listContactBlocking.contains(privateId);
 
                     if (isBlocked || hasBlock) {
                         imgAttach.setEnabled(false);
@@ -320,6 +324,8 @@ public class ChatMessage extends BaseActivity {
         mMessageRef.removeEventListener(childEventListenerMessageModification);
         mNewMessageQuery.removeEventListener(childEventListenerNewMessage);
         mUserRef.removeEventListener(valueEventListenerUser);
+        mBlockingRef.removeEventListener(valueEventListenerBlocking);
+
         chatId = null;
         dataSnapshotUser = null;
         super.onDestroy();
@@ -914,9 +920,6 @@ public class ChatMessage extends BaseActivity {
                 if (connectionDetector.isConnectingToInternet()) {
 
                     DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
-                    DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
-
-                    mBlockingRef.removeValue();
                     mBlocksRef.removeValue(new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -980,9 +983,6 @@ public class ChatMessage extends BaseActivity {
                     if (hasBlock) {
 
                         DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
-                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
-
-                        mBlockingRef.removeValue();
                         mBlocksRef.removeValue();
 
                         toastMsg = "User deblocked";
@@ -996,9 +996,6 @@ public class ChatMessage extends BaseActivity {
                         block.put("createdAt", dateBlocks);
 
                         DatabaseReference mBlocksRef = mRootRef.getReference("blocks").child(userId).child(privateId);
-                        DatabaseReference mBlockingRef = mRootRef.getReference("blocking").child(privateId).child(userId);
-
-                        mBlockingRef.updateChildren(block);
                         mBlocksRef.updateChildren(block);
 
                         toastMsg = "User blocked";
@@ -1133,6 +1130,43 @@ public class ChatMessage extends BaseActivity {
         Button btnPositif = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         btnPositif.setTextColor(context.getResources().getColor(R.color.colorPrimary));
 
+    }
+
+    public void checkBlockingContacts() {
+        valueEventListenerBlocking = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    isBlocked = true;
+                } else {
+                    isBlocked = false;
+                }
+
+                if (isBlocked || hasBlock) {
+                    imgAttach.setEnabled(false);
+                    etMessage.setEnabled(false);
+                    imgSend.setEnabled(false);
+
+                    View viewFocus = getCurrentFocus();
+                    if (viewFocus != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(viewFocus.getWindowToken(), 0);
+                        etMessage.clearFocus();
+                    }
+
+                } else {
+                    imgAttach.setEnabled(true);
+                    etMessage.setEnabled(true);
+                    imgSend.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mBlockingRef.addValueEventListener(valueEventListenerBlocking);
     }
 
     @Override

@@ -113,7 +113,6 @@ public class MainActivity extends BaseActivity {
     View vBlockOption;
 
     public static List<String> listYouzBlocks = new ArrayList<>();
-    public static List<String> listContactBlocking = new ArrayList<>();
     public static TextView tvBadgeMsg, tvBadgeNotif;
     public static Context context;
     public static String locale;
@@ -128,10 +127,8 @@ public class MainActivity extends BaseActivity {
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mBlocksRef;
-    DatabaseReference mBlockingRef;
 
     private ValueEventListener valueEventListener;
-    private ValueEventListener valueEventListenerBlocking;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private String userId;
@@ -168,9 +165,6 @@ public class MainActivity extends BaseActivity {
 
         mBlocksRef = mRootRef.getReference("blocks/" + userId);
         getBlockContacts();
-
-        mBlockingRef = mRootRef.getReference("blocking/" + userId);
-        getBlockingContacts();
 
         tvBadgeMsg = (TextView) findViewById(R.id.tv_badge_msg);
         tvBadgeNotif = (TextView) findViewById(R.id.tv_badge_notif);
@@ -386,9 +380,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         context = null;
         listYouzBlocks = new ArrayList<>();
-        listContactBlocking = new ArrayList<>();
         mBlocksRef.removeEventListener(valueEventListener);
-        mBlockingRef.removeEventListener(valueEventListenerBlocking);
         super.onDestroy();
     }
 
@@ -479,31 +471,6 @@ public class MainActivity extends BaseActivity {
             }
         };
         mBlocksRef.addValueEventListener(valueEventListener);
-    }
-
-    public void getBlockingContacts() {
-        valueEventListenerBlocking = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    HashMap<String, Object> blocks = (HashMap<String, Object>) dataSnapshot.getValue();
-                    listContactBlocking.clear();
-                    for (Map.Entry<String, Object> block : blocks.entrySet()) {
-                        if (!listContactBlocking.contains(block.getKey())) {
-                            listContactBlocking.add(block.getKey());
-                        }
-                    }
-
-                    sendMessageResult("Block");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mBlockingRef.addValueEventListener(valueEventListenerBlocking);
     }
 
     public class FixedSpeedScroller extends Scroller {
