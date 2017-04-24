@@ -1,0 +1,128 @@
+<resources>
+
+    <string name="drawer_open">ouverture</string>
+    <string name="drawer_close">fermeture</string>
+
+    <string name="time_today">Aujourd\'hui</string>
+    <string name="time_yesterday">Hier</string>
+
+    <string-array name="time_days_of_week">
+        <item>Dimanche</item>
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+        <item>Samedi</item>
+    </string-array>
+
+    <string name="open_weather_maps_app_id">11111</string>
+    <string name="app_name">YOUZ</string>
+    <string name="facebook_app_id">1840788659523032</string>
+
+    <string name="slid_intro_desc_0">YOUZ, Partage avec vos amis en secret.</string>
+    <string name="slid_intro_desc_1">Partagez avec vos amis anonymement.</string>
+    <string name="slid_intro_desc_2">Exprimez-vous avec des photos,</string>
+    <string name="slid_intro_desc_3">... ou une humeur.</string>
+    <string name="slid_intro_desc_4">Les conversations vous ne pouvez pas avoir comme eux.</string>
+
+    <string name="slid_intro_title_0">Soyez vous-même</string>
+    <string name="slid_intro_title_1">Ecrire très bien</string>
+    <string name="slid_intro_title_2">Aucun nom ou profils</string>
+    <string name="slid_intro_title_3">Grandes idées se propagent</string>
+
+    <string name="waiting_for_fix">En attente de GPS réparer ...</string>
+    <string name="gps_disabled">GPS désactivé</string>
+    <string name="please_enable_gps">Pour utiliser cette application, vous avez besoin que le GPS soit activé.</string>
+
+    <string name="friends_number">Nombre d\'amis :</string>
+    <string name="gps_in_setting">Réglage de GPS</string>
+    <string name="gps_not_work">Le GPS n\'est pas activé. Voulez-vous aller au menu des paramètres?</string>
+    <string name="Settings">Paramètres</string>
+    <string name="repeat_after_setting">Réessayer après avoir activé le GPS</string>
+    <string name="Cancel">Annuler</string>
+    <string name="home_friend">Amis</string>
+    <string name="home_nearby">Proche</string>
+    <string name="home_populair">Populaire</string>
+    <string name="profil_saved">Enregistré</string>
+    <string name="profil_likes">Aimé</string>
+    <string name="profil_post">Postes</string>
+
+    <string name="menu_more_post_reyouz">Reyouz</string>
+    <string name="menu_more_post_Share">Partager</string>
+    <string name="menu_more_post_Save">Enregistrer</string>
+    <string name="menu_more_most_Report">Signaler</string>
+    <string name="menu_more_most_Block">Bloquer</string>
+    <string name="menu_more_post_Update">Mettre à jour</string>
+    <string name="menu_more_post_Delete">Effacer</string>
+    <string name="menu_more_post_Delete_Save">Supprimer l\'enregistrement</string>
+    <string name="conx_down">Problème de connexion</string>
+    <string name="info_save_delete">Enregistrement supprimé</string>
+    <string name="info_save_added">Enregistrement ajouté</string>
+    <string name="add_yr_comment">votre commentaire...</string>
+    <string name="text_info_no_comment">Il n\'y a pas de commentaires, soyez le premier à commenter cette publication.</string>
+    <string name="info_delete_is_done">La suppression a été effectuée</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_validate">Valider</string>
+    <string name="dialog_message_to_delete_post">Voulez-vous supprimer ?</string>
+    <string name="info_block_done">Le bloc a été fait</string>
+    <string name="dialog_message_block_post">Voulez-vous bloquer cette poste et tous les postes similaires ?</string>
+    <string name="info_repost_done">Le signal a été fait</string>
+    <string name="info_to_choose_report">Choisissez le type de signal</string>
+    <string name="dialog_message_share">Voulez-vous partager cette publication comme suit :</string>
+    <string name="dialog_Friends">Amis</string>
+    <string name="dialog_Public">Public</string>
+    <string name="write_sub_comment">Écrivez votre sous-commentaire</string>
+    <string name="edit_SubComment">Sous-commentaire ...</string>
+    <string name="info_un_block">Le déblock a été fait</string>
+    <string name="dialog_message_un_block">Voulez-vous débloquer cet utilisateur ?</string>
+    <string name="info_delete_dialog">Conversation supprimée</string>
+    <string name="dialog_message_delete_dialog">Voulez-vous supprimer ?</string>
+    <string name="notif_like">Aimer votre poste</string>
+    <string name="notif_comment">Commenter votre poste</string>
+    <string name="notif_reply">Répondre à votre commentaire</string>
+    <string name="notif_share">Partager votre poste</string>
+    <string name="Delete_image">Supprimer le message</string>
+    <string name="Download_image">Télécharger l\'image</string>
+    <string name="Delete_message">Supprimer le message</string>
+    <string name="Copy_message">Copier le texte du message</string>
+    <string name="show_more_tags">Afficher plus de TAGs</string>
+    <string name="Incorrect_code">Code incorrect</string>
+    <string name="next">Suivant</string>
+    <string name="phone_numer">Numéro de téléphone</string>
+    <string name="info_sent_code">Nous vous enverrons un code de vérification\\npour confirmer votre numéro</string>
+    <string name="info_delai_code">Vous devriez recevoir un code de vérification\\ndans les 30 secondes</string>
+    <string name="press_to_new_code">Appuyez ici pour entrer un nouveau numéro de téléphone</string>
+    <string name="settings_share_with_friend">Partager avec des amis</string>
+    <string name="about_youz">A propos Youz</string>
+    <string name="Privacy_policy">Politique de confidentialité</string>
+    <string name="Blocks_list">Liste des blocks</string>
+    <string name="Language">Langue</string>
+    <string name="Account">Compte</string>
+    <string name="Only_from_friends">Seulement d\'amis</string>
+    <string name="Fromallusers">De tous les utilisateurs</string>
+    <string name="ReceiveMessages">Recevoir des messages</string>
+    <string name="Message">Message</string>
+    <string name="Comment">Commenter</string>
+    <string name="Reyouz">Reyouz</string>
+    <string name="Like">Aimer</string>
+    <string name="Newpost">Nouvelle poste</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Setting">Paramètres</string>
+    <string name="AddsubComment">Ajouter un sous-commentaire</string>
+    <string name="Blockuser">Blocker l\'utilisateur</string>
+    <string name="Deletecomment">Supprimer le commentaire</string>
+    <string name="Reportcomment">Signaler le commentaire</string>
+    <string name="UnBlockuser">DéBlocker l\'utilisateur</string>
+    <string name="dialog_message_delete_comment">Voulez-vous supprimer ce commentaire ?</string>
+    <string name="info_share_done">Le partage a été fait</string>
+    <string name="title_abuse">Abuse report</string>
+    <string name="share_twitter">Partage sur\\nTwitter</string>
+    <string name="share_facebook">Partage sur\\nFacebook</string>
+    <string name="title_activity_share">Pour publier cette poste, sélectionnez l\'option Partager!</string>
+    <string name="Updatingpost">Mise à jour de la poste ...</string>
+    <string name="write_status">Écrivez votre statut</string>
+    <string name="no_change">Pas de changement!</string>
+    <string name="Savingpost">Enregistrement de la poste ...</string>
+
+</resources>

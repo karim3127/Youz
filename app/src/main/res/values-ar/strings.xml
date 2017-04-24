@@ -1,0 +1,128 @@
+<resources>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
+    <string name="time_today">Today</string>
+    <string name="time_yesterday">Yesterday</string>
+
+    <string-array name="time_days_of_week">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <string name="slid_intro_desc_0">YOUZ, Share with your friends secretly.</string>
+    <string name="slid_intro_desc_1">Share with your friends anonymosly.</string>
+    <string name="slid_intro_desc_2">Express yourself with photos,</string>
+    <string name="slid_intro_desc_3">.. or a mood.</string>
+    <string name="slid_intro_desc_4">Conversations you can\'t have like them.</string>
+
+    <string name="slid_intro_title_0">Be yourself</string>
+    <string name="slid_intro_title_1">Write beautifully</string>
+    <string name="slid_intro_title_2">No names or profiles</string>
+    <string name="slid_intro_title_3">Great ideas spread</string>
+
+    <string name="waiting_for_fix">Waiting for gps fix …</string>
+    <string name="gps_disabled">Gps disabled</string>
+    <string name="please_enable_gps">In order to use this app you need the gps to be enabled.</string>
+
+    <string name="open_weather_maps_app_id">11111</string>
+
+    <string name="app_name">YOUZ</string>
+
+    <string name="facebook_app_id">1840788659523032</string>
+
+    <string name="friends_number">Friends number :</string>
+    <string name="gps_in_setting">GPS is settings</string>
+    <string name="gps_not_work">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="Settings">Settings</string>
+    <string name="repeat_after_setting">Retry after activating GPS</string>
+    <string name="Cancel">Cancel</string>
+    <string name="home_friend">Friends</string>
+    <string name="home_nearby">NearBy</string>
+    <string name="home_populair">Popular</string>
+    <string name="profil_saved">Saved</string>
+    <string name="profil_likes">Liked</string>
+    <string name="profil_post">Posts</string>
+    <string name="menu_more_post_reyouz">Reyouz</string>
+    <string name="menu_more_post_Share">Share</string>
+    <string name="menu_more_post_Save">Save</string>
+    <string name="menu_more_most_Report">Report</string>
+    <string name="menu_more_most_Block">Block</string>
+    <string name="menu_more_post_Update">Update</string>
+    <string name="menu_more_post_Delete">Delete</string>
+    <string name="menu_more_post_Delete_Save">Delete save</string>
+    <string name="conx_down">Connexion is down</string>
+    <string name="info_save_delete">Save deleted</string>
+    <string name="info_save_added">Save added</string>
+    <string name="add_yr_comment">Your comment...</string>
+    <string name="text_info_no_comment">There is no comments, be the first how comment this post.</string>
+    <string name="info_delete_is_done">Delete post is done</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_validate">Validate</string>
+    <string name="dialog_message_to_delete_post">Would you like to delete ?</string>
+    <string name="info_block_done">Block is done</string>
+    <string name="dialog_message_block_post">Would you like to block this post and all similar posts ?</string>
+    <string name="info_repost_done">Report is done</string>
+    <string name="info_to_choose_report">Choose type of report</string>
+    <string name="dialog_message_share">Would you share this post as :</string>
+    <string name="dialog_Friends">Friends</string>
+    <string name="dialog_Public">Public</string>
+    <string name="write_sub_comment">Write your subComment</string>
+    <string name="edit_SubComment">SubComment...</string>
+    <string name="info_un_block">Un-Block is done</string>
+    <string name="dialog_message_un_block">Would you like to un-block this user ?</string>
+    <string name="info_delete_dialog">Conversation deleted</string>
+    <string name="dialog_message_delete_dialog">Would you like to delete ?</string>
+    <string name="notif_like">Liked your post</string>
+    <string name="notif_comment">Commented your post</string>
+    <string name="notif_reply">Replied to your comment</string>
+    <string name="notif_share">Sahred your post</string>
+    <string name="Delete_image">Delete message</string>
+    <string name="Download_image">Download image</string>
+    <string name="Delete_message">Delete message</string>
+    <string name="Copy_message">Copy text of message</string>
+    <string name="show_more_tags">Show more TAGs</string>
+    <string name="Incorrect_code">Incorrect code</string>
+    <string name="next">next</string>
+    <string name="phone_numer">Phone number</string>
+    <string name="info_sent_code">We will send you a verification code\\nto confirme your number</string>
+    <string name="info_delai_code">You should receive a verification code\\nwithin 30 secs</string>
+    <string name="press_to_new_code">Press here to enter new phone number</string>
+    <string name="settings_share_with_friend">Share with friends</string>
+    <string name="about_youz">About Youz</string>
+    <string name="Privacy_policy">Privacy policy</string>
+    <string name="Blocks_list">Blocks list</string>
+    <string name="Language">Language</string>
+    <string name="Account">Account</string>
+    <string name="Only_from_friends">Only from friends</string>
+    <string name="Fromallusers">From all users</string>
+    <string name="ReceiveMessages">Receive Messages</string>
+    <string name="Message">Message</string>
+    <string name="Comment">Comment</string>
+    <string name="Reyouz">Reyouz</string>
+    <string name="Like">Like</string>
+    <string name="Newpost">New post</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Setting">Setting</string>
+    <string name="AddsubComment">Add  subComment</string>
+    <string name="Blockuser">Block user</string>
+    <string name="Deletecomment">Delete comment</string>
+    <string name="Reportcomment">Report comment</string>
+    <string name="UnBlockuser">DeBlock User</string>
+    <string name="dialog_message_delete_comment">Would you like to delete this comment ?</string>
+    <string name="info_share_done">Share is done</string>
+    <string name="title_abuse">Abuse report</string>
+    <string name="share_twitter">Share on\\nTwitter</string>
+    <string name="share_facebook">Share on\\nFacebook</string>
+    <string name="title_activity_share">To publish this post, please select share option !</string>
+    <string name="Updatingpost">Updating post ...</string>
+    <string name="write_status">Write your status</string>
+    <string name="no_change">There is no changes!</string>
+    <string name="Savingpost">Saving post ...</string>
+</resources>

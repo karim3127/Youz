@@ -378,7 +378,7 @@ public class Setting extends BaseActivity {
         View dialogView;
         if (defaultLangage.equals("ar")) {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup_ar, null);
-        }else if (defaultLangage.equals("wi")) {
+        }else if (defaultLangage.equals("fr")) {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup_fr, null);
         }else {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup, null);
@@ -388,9 +388,6 @@ public class Setting extends BaseActivity {
         final AlertDialog alerteLanguage = dialog.create();
         alerteLanguage.show();
 
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 420, getResources().getDisplayMetrics());
-        alerteLanguage.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, px);
-
         final RadioButton rb1 = (RadioButton) dialogView.findViewById(R.id.rb1);
         final RadioButton rb2 = (RadioButton) dialogView.findViewById(R.id.rb2);
         final RadioButton rb3 = (RadioButton) dialogView.findViewById(R.id.rb3);
@@ -399,7 +396,7 @@ public class Setting extends BaseActivity {
             rb1.setChecked(true);
         if (defaultLangage.equals("en"))
             rb2.setChecked(true);
-        if (defaultLangage.equals("wi"))
+        if (defaultLangage.equals("fr"))
             rb3.setChecked(true);
 
         rb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -466,11 +463,11 @@ public class Setting extends BaseActivity {
                     finishAffinity();
                     startActivity(intent);
 
-                } else if (rb3.isChecked() && !defaultLangage.equals("wi")) {
+                } else if (rb3.isChecked() && !defaultLangage.equals("fr")) {
 
-                    editor.putString("Langage", "wi");
+                    editor.putString("Langage", "fr");
                     editor.apply();
-                    myLocale = new Locale("wi");
+                    myLocale = new Locale("fr");
                     Resources res = getResources();
                     DisplayMetrics dm = res.getDisplayMetrics();
                     Configuration conf = res.getConfiguration();
