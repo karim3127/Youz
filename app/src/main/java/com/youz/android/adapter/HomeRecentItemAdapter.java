@@ -276,8 +276,31 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             HashMap<String, Object> dialogCurrent = listItems.get(pos).second;
             long currentNote = (dialogCurrent.get("note") != null) ? (long) dialogCurrent.get("note") : 0;
 
-            if (itemNote >= currentNote) {
+            if (itemNote > currentNote) {
                 isHere = true;
+            } else if (itemNote == currentNote) {
+                String itemDate = (String) itemDetails.get("createdAt");
+
+                Date dateNew = null;
+                try {
+                    dateNew = format.parse(itemDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                String lastDate = (String) dialogCurrent.get("createdAt");
+                Date dateDialog = null;
+                try {
+                    dateDialog = format.parse(lastDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (dateNew.compareTo(dateDialog) > 0) {
+                    isHere = true;
+                } else {
+                    pos++;
+                }
             } else {
                 pos++;
             }

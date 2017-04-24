@@ -125,7 +125,7 @@ public class TagPosts extends BaseActivity {
 
                         if (!isBlocked && (isPublic || isFriend)) {
                             Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
-                            adapter.addItemInRightPosition(item);
+                            adapter.addPopularItemInRightPosition(item);
                             scrollUp();
                         }
                         avloadingIndicatorView.setVisibility(View.GONE);
