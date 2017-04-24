@@ -119,11 +119,11 @@ public class MessageItemAdapter extends RecyclerView.Adapter<MessageItemAdapter.
             }
 
             if (messageDetails.get("type").equals("text")) {
-                messageView = TextCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, userId, likesQuery);
+                messageView = TextCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, messageDetails.get("senderId").toString(), likesQuery);
                 holder.chatItemContainer.addView(messageView);
 
             } else if (messageDetails.get("type").equals("image")) {
-                messageView = ImageCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, userId, likesQuery);
+                messageView = ImageCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, messageDetails.get("senderId").toString(), likesQuery);
                 holder.chatItemContainer.addView(messageView);
 
             }

@@ -461,8 +461,10 @@ public class MainActivity extends BaseActivity {
                             homeProfilLikedFragment.notifyBlockPost();
                         }
                     }
-                    sendMessageResult("Block");
+                } else {
+                    listYouzBlocks = new ArrayList<>();
                 }
+                sendMessageResult("Block");
             }
 
             @Override

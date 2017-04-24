@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -58,7 +57,7 @@ public class HomeMessageItemAdapter extends RecyclerView.Adapter<HomeMessageItem
         this.listItems = listItems;
         typeFaceGras = Typeface.createFromAsset(context.getAssets(), "fonts/optima_bold.ttf");
         typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/Optima-Regular.ttf");
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(TimeZone.getDefault());
         prefs = context.getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         userId = prefs.getString("UserId", "");
