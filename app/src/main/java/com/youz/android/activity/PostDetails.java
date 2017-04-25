@@ -1542,6 +1542,21 @@ public class PostDetails extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshotUser = dataSnapshot;
+
+                HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
+                boolean enablePublicChat = (membersDetails.get("enablePublicChat") != null) ? (boolean) membersDetails.get("enablePublicChat") : true;
+                if (enablePublicChat || isHimFriend) {
+                    if (userId.equals(postOwner)) {
+                        ivMessage.setVisibility(View.GONE);
+                        avloadingIndicatorView.setVisibility(View.GONE);
+                    } else {
+                        ivMessage.setVisibility(View.VISIBLE);
+                        avloadingIndicatorView.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    ivMessage.setVisibility(View.GONE);
+                    avloadingIndicatorView.setVisibility(View.GONE);
+                }
             }
 
             @Override

@@ -331,6 +331,7 @@ public class SignUp extends AppCompatActivity {
                     final boolean notifsLikes = (details.get("notifsLikes") != null) ? (boolean) details.get("notifsLikes") : true;
                     final boolean notifsPosts = (details.get("notifsPosts") != null) ? (boolean) details.get("notifsPosts") : true;
                     final boolean notifsShares = (details.get("notifsShares") != null) ? (boolean) details.get("notifsShares") : true;
+                    final boolean enablePublicChat = (details.get("enablePublicChat") != null) ? (boolean) details.get("enablePublicChat") : true;
 
                     HashMap<String, Object> result = new HashMap<>();
                     result.put("status", "offline");
@@ -341,6 +342,7 @@ public class SignUp extends AppCompatActivity {
                     result.put("notifsLikes", notifsLikes);
                     result.put("notifsPosts", notifsPosts);
                     result.put("notifsShares", notifsShares);
+                    result.put("enablePublicChat", enablePublicChat);
 
                     editor.putString("CountryName", country);
                     editor.commit();
@@ -356,6 +358,7 @@ public class SignUp extends AppCompatActivity {
                                 editor.putBoolean("notifsLikes", notifsLikes);
                                 editor.putBoolean("notifsPosts", notifsPosts);
                                 editor.putBoolean("notifsShares", notifsShares);
+                                editor.putBoolean("enablePublicChat", enablePublicChat);
                                 editor.putString("UserId", key);
                                 editor.remove("CodeConfirm");
                                 editor.commit();
@@ -387,6 +390,7 @@ public class SignUp extends AppCompatActivity {
                     result.put("notifsLikes", true);
                     result.put("notifsPosts", true);
                     result.put("notifsShares", true);
+                    result.put("enablePublicChat", true);
 
                     editor.putString("CountryName", country);
                     editor.commit();
@@ -405,6 +409,7 @@ public class SignUp extends AppCompatActivity {
                                 editor.putBoolean("notifsLikes", true);
                                 editor.putBoolean("notifsPosts", true);
                                 editor.putBoolean("notifsShares", true);
+                                editor.putBoolean("enablePublicChat", true);
                                 editor.putString("UserId", phoneNumber);
                                 editor.remove("CodeConfirm");
                                 editor.commit();
