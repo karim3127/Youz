@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
@@ -124,7 +123,7 @@ public class SecretApplication extends Application {
 
             if (BaseActivity.isAppWentToBg) {
                 Intent intent = new Intent(instance, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 if (additionalData != null) {
                     try {
@@ -145,8 +144,7 @@ public class SecretApplication extends Application {
 
             } else {
                 Intent intent = new Intent(instance, MainActivity.class);
-                // set the new task and clear flags
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 if (additionalData != null) {
                     try {
