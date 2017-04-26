@@ -20,7 +20,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -41,7 +40,7 @@ public class TextCellMessage {
 
         TextView txtTime = (TextView) v.findViewById(R.id.txtTime);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(TimeZone.getDefault());
         Date date = null;
         try {

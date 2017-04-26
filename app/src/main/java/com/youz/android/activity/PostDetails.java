@@ -68,7 +68,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -212,7 +211,7 @@ public class PostDetails extends BaseActivity {
 
         timeZone = TimeZone.getDefault();
 
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(timeZone);
 
         options = new DisplayImageOptions.Builder()

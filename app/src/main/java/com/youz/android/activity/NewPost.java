@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 
@@ -250,7 +249,7 @@ public class NewPost extends BaseActivity {
         mTagRef = mRootRef.getReference("tags");
 
         timeZone = TimeZone.getDefault();
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(timeZone);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

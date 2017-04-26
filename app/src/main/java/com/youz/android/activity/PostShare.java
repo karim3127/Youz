@@ -38,7 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -107,7 +106,7 @@ public class PostShare extends BaseActivity {
         connectionDetector = new ConnectionDetector(this);
 
         timeZone = TimeZone.getDefault();
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(timeZone);
 
         options = new DisplayImageOptions.Builder()

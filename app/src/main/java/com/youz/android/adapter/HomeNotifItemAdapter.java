@@ -68,7 +68,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
         typeFaceGras = Typeface.createFromAsset(context.getAssets(), "fonts/optima_bold.ttf");
 
         timeZone = TimeZone.getDefault();
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(timeZone);
 
         prefs = context.getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);

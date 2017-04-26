@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -49,7 +48,7 @@ public class MessageItemAdapter extends RecyclerView.Adapter<MessageItemAdapter.
         prefs = context.getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         userId = prefs.getString("UserId", "");
 
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(TimeZone.getDefault());
 
         mMessageRef = mRootRef.getReference("messages").child(chatId);

@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class HomeMessageFragment extends Fragment {
@@ -117,7 +116,7 @@ public class HomeMessageFragment extends Fragment {
         mChatRef = mRootRef.getReference("chats");
         mQueryChat = mChatRef.orderByChild("members/" + userId).equalTo(true);
 
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH);
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         format.setTimeZone(TimeZone.getDefault());
 
         avloadingIndicatorView = (AVLoadingIndicatorView) layout.findViewById(R.id.avloadingIndicatorView);

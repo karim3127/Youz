@@ -8,19 +8,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class UtilDateTime {
     private static final int TIME_HOURS_24 = 24 * 60 * 60 * 1000;
-    private static final SimpleDateFormat DAY_OF_WEEK = new SimpleDateFormat("EEE, dd LLL", Locale.ENGLISH);
+    private static final SimpleDateFormat DAY_OF_WEEK = new SimpleDateFormat("EEE, dd LLL");
 
 
     public static String formatTime(Context context, Date date) {
-        //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-        //DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-        final SimpleDateFormat format = new SimpleDateFormat("dd MMMM", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        final SimpleDateFormat format = new SimpleDateFormat("dd MMMM");
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -49,7 +46,7 @@ public class UtilDateTime {
     public static String formatChatStatus(Context context, Date date) {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-        final SimpleDateFormat format = new SimpleDateFormat("dd MMMM", Locale.ENGLISH);
+        final SimpleDateFormat format = new SimpleDateFormat("dd MMMM");
 
         Date currentDate = new Date();
         Calendar cal = Calendar.getInstance();
