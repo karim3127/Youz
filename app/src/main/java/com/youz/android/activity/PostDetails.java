@@ -261,11 +261,6 @@ public class PostDetails extends BaseActivity {
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError == null) {
                                 modifNote(currentPost.first, 1);
-
-                                Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.like_sound);
-                                Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
-                                ringtone.play();
-
                             }
                         }
                     });
@@ -294,7 +289,7 @@ public class PostDetails extends BaseActivity {
                             String messagePush = "Liked your post";
                             String userIdsList = userIds.toString();
                             try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='like','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='like','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -645,7 +640,7 @@ public class PostDetails extends BaseActivity {
                     String messagePush = "Commented your post";
                     String userIdsList = userIds.toString();
                     try {
-                        OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                        OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1370,7 +1365,7 @@ public class PostDetails extends BaseActivity {
                                         String messagePush = "Replied to your comment";
                                         String userIdsList = userIds.toString();
                                         try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -2175,7 +2170,7 @@ public class PostDetails extends BaseActivity {
                             String messagePush = "Shared your post";
                             String userIdsList = userIds.toString();
                             try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='share','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='share','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

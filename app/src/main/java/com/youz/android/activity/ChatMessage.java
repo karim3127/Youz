@@ -739,7 +739,7 @@ public class ChatMessage extends BaseActivity {
                 String messagePush = "You have new chat message";
                 String userIdsList = userIds.toString();
                 try {
-                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -815,7 +815,7 @@ public class ChatMessage extends BaseActivity {
 
         RoundedImageView image = (RoundedImageView) dialogView.findViewById(R.id.goProDialogImage);
 
-        ImageLoader.getInstance().displayImage(uri.toString(), image, options);//"file://"+
+        ImageLoader.getInstance().displayImage(uri.toString(), image, options);
 
         TextView txtValide = (TextView) dialogView.findViewById(R.id.txtValide);
         txtValide.setOnClickListener(new View.OnClickListener() {

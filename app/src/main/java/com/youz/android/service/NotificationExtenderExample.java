@@ -44,6 +44,9 @@ public class NotificationExtenderExample extends NotificationExtenderService {
                   builder.setSmallIcon(R.drawable.ic_logo_header);
                   builder.setColor(getResources().getColor(R.color.colorPrimary));
 
+                  Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.activate_secondary);
+                  builder.setSound(sound);
+
                   return builder;
                }
             };

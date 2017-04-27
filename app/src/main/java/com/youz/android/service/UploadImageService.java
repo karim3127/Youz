@@ -172,7 +172,7 @@ public class UploadImageService extends Service {
                                 String messagePush = "You have new chat message";
 
                                 try {
-                                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'},  'include_player_ids': " + userIdsList + "}"), null);
+                                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'},  'include_player_ids': " + userIdsList + "}"), null);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

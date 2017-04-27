@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.util.Pair;
@@ -396,11 +393,6 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                 if (databaseError == null) {
                                     modifNote(postId, true);
-
-                                    Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.like_sound);
-                                    Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
-                                    ringtone.play();
-
                                 }
                             }
                         });
@@ -435,7 +427,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                         String messagePush = "Liked your post";
                                         String userIdsList = userIds.toString();
                                         try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='like','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='like','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -883,7 +875,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                         String messagePush = "Shared your post";
                                         String userIdsList = userIds.toString();
                                         try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'default', 'data': {'type'='share','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='share','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
