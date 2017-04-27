@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -258,6 +261,11 @@ public class PostDetails extends BaseActivity {
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError == null) {
                                 modifNote(currentPost.first, 1);
+
+                                Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.like_sound);
+                                Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
+                                ringtone.play();
+
                             }
                         }
                     });

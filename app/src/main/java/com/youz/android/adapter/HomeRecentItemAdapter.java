@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.util.Pair;
@@ -393,6 +396,11 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                 if (databaseError == null) {
                                     modifNote(postId, true);
+
+                                    Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.like_sound);
+                                    Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
+                                    ringtone.play();
+
                                 }
                             }
                         });

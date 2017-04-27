@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,12 +31,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -47,6 +49,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.onesignal.OneSignal;
@@ -531,6 +534,16 @@ public class ChatMessage extends BaseActivity {
                         String lastId = (adapter.getItemCount() > 0) ? adapter.listItems.get(adapter.getItemCount() - 1).first : "";
                         if (!lastId.equals(msg.first)) {
 
+                            Uri sound;
+                            if (msg.second.get("senderId").equals(userId)) {
+                                sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.chat_out_going);
+                            } else {
+                                sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.chat_in_coming);
+                            }
+
+                            Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
+                            ringtone.play();
+
                             adapter.addOnBottom(msg);
                             scrollDown();
                         }
@@ -790,12 +803,25 @@ public class ChatMessage extends BaseActivity {
     }
 
     private void showDialog( final  Uri uri) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-                dialog.dismiss();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(true);
+
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.go_pro_dialog_layout, null);
+        dialog.setView(dialogView);
+
+        final AlertDialog alerteValidImage = dialog.create();
+        alerteValidImage.show();
+
+        RoundedImageView image = (RoundedImageView) dialogView.findViewById(R.id.goProDialogImage);
+
+        ImageLoader.getInstance().displayImage(uri.toString(), image, options);//"file://"+
+
+        TextView txtValide = (TextView) dialogView.findViewById(R.id.txtValide);
+        txtValide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alerteValidImage.dismiss();
                 try {
                     InputStream imageStream = getContentResolver().openInputStream(uri);
                     Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
@@ -808,22 +834,15 @@ public class ChatMessage extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        });
+
+        TextView txtCancel = (TextView) dialogView.findViewById(R.id.txtCancel);
+        txtCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View view) {
+                alerteValidImage.dismiss();
             }
         });
-        final AlertDialog dialog = builder.create();
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.go_pro_dialog_layout, null);
-
-        dialog.setView(dialogLayout);
-        ImageView image = (ImageView) dialogLayout.findViewById(R.id.goProDialogImage);
-
-        ImageLoader.getInstance().displayImage(uri+"", image, options);//"file://"+
-        Toast.makeText(getApplicationContext(),uri+"",Toast.LENGTH_SHORT).show();
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         try {
             dialog.show();
@@ -831,23 +850,6 @@ public class ChatMessage extends BaseActivity {
 
         }
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface d) {
-
-
-
-                /*Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.whygoprodialogimage);
-                float imageWidthInPX = (float)image.getWidth();
-
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
-                        Math.round(imageWidthInPX * (float)icon.getHeight() / (float)icon.getWidth()));
-                image.setLayoutParams(layoutParams);*/
-
-
-            }
-        });
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
