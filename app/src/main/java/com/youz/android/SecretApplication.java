@@ -81,8 +81,8 @@ public class SecretApplication extends Application {
             SharedPreferences.Editor editor = prefs.edit();
             if (defaultLangage.equals("ar") ) {
                 editor.putString("Langage", "ar");
-            } else if (defaultLangage.equals("wi") ) {
-                editor.putString("Langage", "wi");
+            } else if (defaultLangage.equals("fr") ) {
+                editor.putString("Langage", "fr");
             }else {
                 editor.putString("Langage", "en");
             }

@@ -261,6 +261,11 @@ public class PostDetails extends BaseActivity {
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError == null) {
                                 modifNote(currentPost.first, 1);
+
+                                Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.like_sound);
+                                Ringtone ringtone = RingtoneManager.getRingtone(context, sound);
+                                ringtone.play();
+
                             }
                         }
                     });

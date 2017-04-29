@@ -1,5 +1,6 @@
 package com.youz.android.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -44,7 +45,9 @@ public class NotificationExtenderExample extends NotificationExtenderService {
                   builder.setSmallIcon(R.drawable.ic_logo_header);
                   builder.setColor(getResources().getColor(R.color.colorPrimary));
 
-                  Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.activate_secondary);
+                  builder.setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE);
+
+                  Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification);
                   builder.setSound(sound);
 
                   return builder;
