@@ -118,7 +118,7 @@ public class HomeProfilSavedFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvSaves.setLayoutManager(llm);
 
-        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, false);
+        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, true);
         rvSaves.setAdapter(adapter);
 
         getListPosts();

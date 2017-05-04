@@ -124,5 +124,7 @@
     <string name="write_status">Écrivez votre statut</string>
     <string name="no_change">Pas de changement!</string>
     <string name="Savingpost">Enregistrement de la poste ...</string>
+    <string name="blockingInputMessage">Vous avez bloqué cet utilisateur</string>
+    <string name="blockedInputMessage">Vous êtes bloqué par cet utilisateur</string>
 
 </resources>

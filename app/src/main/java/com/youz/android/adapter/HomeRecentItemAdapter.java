@@ -155,6 +155,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             long fontSize = (current.get("fontSize") == null) ? -1 : (long) current.get("fontSize");
             int nbLikes = (current.get("likes") == null) ? 0 : ((HashMap<String, Object>) current.get("likes")).size();
             int nbComments = (current.get("comments") == null) ? 0 : ((HashMap<String, Object>) current.get("comments")).size();
+            holder.nbReyouz = (current.get("reyouzCount") == null) ? 0 : (long) current.get("reyouzCount");
             String location = (current.get("location") == null) ? "" : (String) current.get("location");
             String city = (current.get("city") == null) ? "" : " - " + current.get("city");
 
@@ -181,6 +182,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.tvStatus.setText(title);
             holder.tvNbFav.setText(nbLikes + "");
             holder.tvNbComment.setText(nbComments + "");
+            holder.tvNbReyouz.setText(holder.nbReyouz + "");
 
             if (!font.equals("")) {
                 try {
@@ -243,11 +245,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     holder.llLocation.setVisibility(View.INVISIBLE);
                 } else {
                     holder.llLocation.setVisibility(View.VISIBLE);
-                    if(!city.equals(" - ")) {
-                        holder.tvLocation.setText(location + city);
-                    }else{
-                        holder.tvLocation.setText(location);
-                    }
+                    holder.tvLocation.setText(location + city);
                     holder.tvLocation.setTypeface(typeFaceGras);
                 }
             }
@@ -351,12 +349,13 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvDate, tvStatus, tvNbFav, tvNbComment, tvLocation;
+        TextView tvDate, tvStatus, tvNbFav, tvNbComment, tvLocation, tvNbReyouz;
         LinearLayout llContainer, llLocation;
         CardView cardView;
         ImageView imgMore, imgBack;
         LikeButton lbFav;
         View vBack;
+        long nbReyouz = 0;
         boolean isSaved;
         String postId;
         String postOwner;
@@ -377,6 +376,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvNbComment = (TextView) itemView.findViewById(R.id.tv_nb_comment);
             tvNbFav = (TextView) itemView.findViewById(R.id.tv_nb_fav);
+            tvNbReyouz = (TextView) itemView.findViewById(R.id.tv_nb_reyouz);
             tvStatus = (TextView) itemView.findViewById(R.id.tv_status);
             //tvStatus.setTypeface(typeFaceGras);
             tvLocation = (TextView) itemView.findViewById(R.id.tv_location);
@@ -807,6 +807,11 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void createNewPost(boolean isPublic) {
+
+            HashMap<String, Object> reyouzCount = new HashMap<>();
+            reyouzCount.put("reyouzCount", ++nbReyouz);
+            mPostRef.child(postId).updateChildren(reyouzCount);
+
             String key = mPostRef.push().getKey();
             final String createdAt = format.format(new Date());
 

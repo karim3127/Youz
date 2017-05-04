@@ -98,7 +98,9 @@
 
                                 <LinearLayout
                                     android:id="@+id/ll_location"
-                                    android:layout_width="wrap_content"
+                                    android:layout_toLeftOf="@+id/ll_options"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:gravity="center_vertical"
@@ -124,6 +126,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_options"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
@@ -132,9 +135,25 @@
                                     android:orientation="horizontal">
 
                                     <TextView
+                                        android:id="@+id/tv_nb_reyouz"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:text="50"
+                                        android:textColor="@color/colorGrayLight"
+                                        android:textSize="@dimen/text_small_size" />
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="4dp"
+                                        android:src="@drawable/ic_slide_page_0" />
+
+                                    <TextView
                                         android:id="@+id/tv_nb_comment"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginLeft="16dp"
                                         android:text="50"
                                         android:textColor="@color/colorGrayLight"
                                         android:textSize="@dimen/text_small_size" />

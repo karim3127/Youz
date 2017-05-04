@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
+import com.youz.android.activity.MainActivity;
 import com.youz.android.activity.PostDetails;
 import com.youz.android.adapter.HomeRecentItemAdapter;
 
@@ -40,7 +41,7 @@ public class HomeProfilPostsFragment extends Fragment {
 
     private AVLoadingIndicatorView avloadingIndicatorView;
     private RelativeLayout rlNoPost;
-    private RecyclerView rvPosts;
+    public RecyclerView rvPosts;
     private boolean hasMoreLoadind = true;
     private HomeRecentItemAdapter adapter;
     List<Pair<String, HashMap<String, Object>>> listPosts = new ArrayList<>();
@@ -104,6 +105,8 @@ public class HomeProfilPostsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+        ((MainActivity) getActivity()).homeProfilPostsFragment = this;
+
         broadcaster = LocalBroadcastManager.getInstance(getContext());
 
         prefs = getContext().getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
@@ -121,7 +124,7 @@ public class HomeProfilPostsFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvPosts.setLayoutManager(llm);
 
-        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, false);
+        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, true);
         rvPosts.setAdapter(adapter);
 
         getListPosts();

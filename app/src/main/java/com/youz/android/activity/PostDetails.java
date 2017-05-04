@@ -111,6 +111,9 @@ public class PostDetails extends BaseActivity {
     @BindView(R.id.tv_nb_comment)
     TextView tvNbComment;
 
+    @BindView(R.id.tv_nb_reyouz)
+    TextView tvNbReyouz;
+
     @BindView(R.id.img_back)
     ImageView imgBack;
 
@@ -169,6 +172,7 @@ public class PostDetails extends BaseActivity {
 
     private int nbLikes;
     private int nbComments;
+    private long nbReyouz;
     private boolean hasMoreComments = false;
     private boolean isWaiting = false;
     private String title, color, font, photo;
@@ -743,6 +747,7 @@ public class PostDetails extends BaseActivity {
         String city = (current.get("city") == null) ? "" : " - " + current.get("city");
         nbLikes = (current.get("likes") == null) ? 0 : ((HashMap<String, Object>) current.get("likes")).size();
         nbComments = (current.get("comments") == null) ? 0 : ((HashMap<String, Object>) current.get("comments")).size();
+        nbReyouz = (current.get("reyouzCount") == null) ? 0 : (long) current.get("reyouzCount");
 
 
         Date dateDialog = null;
@@ -760,6 +765,9 @@ public class PostDetails extends BaseActivity {
         tvNbFav.setText(nbLikes + "");
         tvNbFav.setTypeface(typeFaceGras);
 
+        tvNbReyouz.setText(nbReyouz + "");
+        tvNbReyouz.setTypeface(typeFaceGras);
+
         tvNbComment.setText(nbComments + "");
         tvNbComment.setTypeface(typeFaceGras);
 
@@ -768,12 +776,7 @@ public class PostDetails extends BaseActivity {
         } else {
             llLocation.setVisibility(View.VISIBLE);
             tvLocation.setTypeface(typeFaceGras);
-            if(!city.equals(" - ")){
-                tvLocation.setText(Html.fromHtml(location + city));
-            }else{
-                tvLocation.setText(Html.fromHtml(location));
-            }
-
+            tvLocation.setText(Html.fromHtml(location + city));
         }
 
         if (!font.equals("")) {
@@ -865,20 +868,6 @@ public class PostDetails extends BaseActivity {
                     return date2.compareToIgnoreCase(date1);
                 }
             });
-
-            int indexMostLiked = -1;
-            int nbMaxLike = 0;
-            for (int i = 0; i < listSortedComment.size(); i++) {
-                if (listSortedComment.get(i).second.get("likes") != null && ((HashMap<String, Object>) listSortedComment.get(i).second.get("likes")).size() > nbMaxLike) {
-                    nbMaxLike = ((HashMap<String, Object>) listSortedComment.get(i).second.get("likes")).size();
-                    indexMostLiked = i;
-                }
-            }
-
-            if (indexMostLiked != -1) {
-                listSortedComment.add(0, listSortedComment.get(indexMostLiked));
-                listSortedComment.remove(indexMostLiked + 1);
-            }
 
             if (listSortedComment.size() > 20) {
                 showListComments(listSortedComment, 0, 20);
@@ -2042,13 +2031,7 @@ public class PostDetails extends BaseActivity {
             }
         });
         AlertDialog alert = builder.create();
-        try {
-            alert.show();
-            alert.getWindow().getAttributes();
-        } catch (Exception e) {
-
-        }
-        alert.getWindow().getAttributes();
+        alert.show();
 
         Button btnNegatif = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
         btnNegatif.setTextColor(context.getResources().getColor(R.color.colorRed));
@@ -2106,6 +2089,11 @@ public class PostDetails extends BaseActivity {
     }
 
     public void createNewPost(boolean isPublic) {
+
+        HashMap<String, Object> reyouzCount = new HashMap<>();
+        reyouzCount.put("reyouzCount", ++nbReyouz);
+        mPostRef.child(currentPost.first).updateChildren(reyouzCount);
+
         String key = mPostRef.push().getKey();
         final String createdAt = format.format(new Date());
 

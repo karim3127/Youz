@@ -120,6 +120,9 @@ public class ChatMessage extends BaseActivity {
     @BindView(R.id.view_blocage)
     View viewBlocage;
 
+    @BindView(R.id.v_block_input)
+    View vBlockInput;
+
     private static int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 21;
     private static final int PICK_IMAGE = 1;
     public static DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -186,6 +189,8 @@ public class ChatMessage extends BaseActivity {
             imgAttach.setEnabled(false);
             etMessage.setEnabled(false);
             imgSend.setEnabled(false);
+
+            vBlockInput.setVisibility(View.VISIBLE);
         }
 
         if (!hasMessage) {
@@ -278,6 +283,8 @@ public class ChatMessage extends BaseActivity {
                         etMessage.setEnabled(false);
                         imgSend.setEnabled(false);
 
+                        vBlockInput.setVisibility(View.VISIBLE);
+
                         View viewFocus = getCurrentFocus();
                         if (viewFocus != null) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -289,6 +296,8 @@ public class ChatMessage extends BaseActivity {
                         imgAttach.setEnabled(true);
                         etMessage.setEnabled(true);
                         imgSend.setEnabled(true);
+
+                        vBlockInput.setVisibility(View.GONE);
                     }
                 }
             }
@@ -313,6 +322,17 @@ public class ChatMessage extends BaseActivity {
         if (!etMessage.getText().toString().trim().equals("")) {
             sendTextMessage(etMessage.getText().toString().trim());
         }
+    }
+
+    @OnClick(R.id.v_block_input)
+    public void vBlockInputClick() {
+        String messageBlock = "";
+        if (hasBlock) {
+            messageBlock = getResources().getString(R.string.blockingInputMessage);
+        } else {
+            messageBlock = getResources().getString(R.string.blockedInputMessage);
+        }
+        Toast.makeText(this, messageBlock, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -933,6 +953,8 @@ public class ChatMessage extends BaseActivity {
                                 etMessage.setEnabled(true);
                                 imgSend.setEnabled(true);
 
+                                vBlockInput.setVisibility(View.GONE);
+
                                 blockItem.setTitle("Block user");
                             }
                         }
@@ -1011,6 +1033,8 @@ public class ChatMessage extends BaseActivity {
                         etMessage.setEnabled(false);
                         imgSend.setEnabled(false);
 
+                        vBlockInput.setVisibility(View.VISIBLE);
+
                         View viewFocus = getCurrentFocus();
                         if (viewFocus != null) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1023,6 +1047,8 @@ public class ChatMessage extends BaseActivity {
                         imgAttach.setEnabled(true);
                         etMessage.setEnabled(true);
                         imgSend.setEnabled(true);
+
+                        vBlockInput.setVisibility(View.GONE);
 
                         blockItem.setTitle("Block user");
                     }
@@ -1149,6 +1175,8 @@ public class ChatMessage extends BaseActivity {
                     etMessage.setEnabled(false);
                     imgSend.setEnabled(false);
 
+                    vBlockInput.setVisibility(View.VISIBLE);
+
                     View viewFocus = getCurrentFocus();
                     if (viewFocus != null) {
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1160,6 +1188,8 @@ public class ChatMessage extends BaseActivity {
                     imgAttach.setEnabled(true);
                     etMessage.setEnabled(true);
                     imgSend.setEnabled(true);
+
+                    vBlockInput.setVisibility(View.GONE);
                 }
             }
 

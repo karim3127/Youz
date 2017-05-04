@@ -37,7 +37,9 @@ import com.tomergoldst.tooltips.ToolTip;
 import com.tomergoldst.tooltips.ToolTipsManager;
 import com.youz.android.R;
 import com.youz.android.adapter.PagerHomeAdapter;
+import com.youz.android.fragment.HomeProfilFragment;
 import com.youz.android.fragment.HomeProfilLikedFragment;
+import com.youz.android.fragment.HomeProfilPostsFragment;
 import com.youz.android.fragment.HomeProfilSavedFragment;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.fragment.HomeRecentNearFriendsFragment;
@@ -63,6 +65,7 @@ public class MainActivity extends BaseActivity {
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 21;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 22;
     private static final int PERMISSIONS_REQUEST_CODE_PICK_CONTACTS = 23;
+    public static final int REQUEST_CODE_NEW_POST = 11;
 
     @BindView(R.id.main_activity)
     RelativeLayout mainActivity;
@@ -124,6 +127,8 @@ public class MainActivity extends BaseActivity {
     public HomeRecentPopularFragment homeRecentPopularFragment;
     public HomeProfilLikedFragment homeProfilLikedFragment;
     public HomeProfilSavedFragment homeProfilSavedFragment;
+    public HomeProfilPostsFragment homeProfilPostsFragment;
+    public HomeProfilFragment homeProfilFragment;
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mBlocksRef;
@@ -290,7 +295,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.img_add_new)
     public void addNewPost() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            startActivity(new Intent(this, NewPost.class));
+            startActivityForResult(new Intent(this, NewPost.class), REQUEST_CODE_NEW_POST);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
         }
@@ -358,7 +363,7 @@ public class MainActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivity(new Intent(this, NewPost.class));
+                startActivityForResult(new Intent(this, NewPost.class), REQUEST_CODE_NEW_POST);
             }
         } else if (PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -367,6 +372,22 @@ public class MainActivity extends BaseActivity {
         } else if (PERMISSIONS_REQUEST_CODE_PICK_CONTACTS == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 homeRecentFriendsFragment.getPhoneContacts();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_NEW_POST) {
+            if (resultCode == RESULT_OK) {
+                vpHome.setCurrentItem(3);
+                homeProfilFragment.vpProfil.setCurrentItem(0);
+                homeProfilPostsFragment.rvPosts.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        homeProfilPostsFragment.rvPosts.smoothScrollToPosition(0);
+                    }
+                });
             }
         }
     }

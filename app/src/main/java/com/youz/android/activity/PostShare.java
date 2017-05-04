@@ -59,6 +59,9 @@ public class PostShare extends BaseActivity {
     @BindView(R.id.tv_nb_comment)
     TextView tvNbComment;
 
+    @BindView(R.id.tv_nb_reyouz)
+    TextView tvNbReyouz;
+
     @BindView(R.id.img_back)
     ImageView imgBack;
 
@@ -87,6 +90,7 @@ public class PostShare extends BaseActivity {
 
     private int nbLikes;
     private int nbComments;
+    private long nbReyouz;
     private String title, color, font, photo;
     private long fontSize;
     private SharedPreferences prefs;
@@ -176,6 +180,7 @@ public class PostShare extends BaseActivity {
         String city = (current.get("city") == null) ? "" : " - " + current.get("city");
         nbLikes = (current.get("likes") == null) ? 0 : ((HashMap<String, Object>) current.get("likes")).size();
         nbComments = (current.get("comments") == null) ? 0 : ((HashMap<String, Object>) current.get("comments")).size();
+        nbReyouz = (current.get("reyouzCount") == null) ? 0 : (long) current.get("reyouzCount");
 
         Date dateDialog = null;
         try {
@@ -195,15 +200,14 @@ public class PostShare extends BaseActivity {
         tvNbComment.setText(nbComments + "");
         tvNbComment.setTypeface(typeFaceGras);
 
+        tvNbReyouz.setText(nbReyouz + "");
+        tvNbReyouz.setTypeface(typeFaceGras);
+
         if (location.equals("")) {
             llLocation.setVisibility(View.INVISIBLE);
         } else {
             llLocation.setVisibility(View.VISIBLE);
-            if(!city.equals(" - ")) {
-                tvLocation.setText(location + city);
-            }else{
-                tvLocation.setText(location);
-            }
+            tvLocation.setText(location + city);
             tvLocation.setTypeface(typeFaceGras);
         }
 
@@ -218,27 +222,28 @@ public class PostShare extends BaseActivity {
         if (fontSize > 0) {
             double size;
             if (fontSize == 6) {
-                size = 5;
+                size = 4;
             } else if (fontSize == 8) {
-                size = 5.5;
+                size = 4.5;
             } else if (fontSize == 10) {
-                size = 6;
+                size = 5;
             } else if (fontSize == 12) {
-                size = 6.5;
-            } else if (fontSize == 14) {
-                size = 7;
-            } else if (fontSize == 16) {
-                size = 7.5;
-            } else if (fontSize == 18) {
-                size = 8;
-            } else {
                 size = 5.5;
+            } else if (fontSize == 14) {
+                size = 6;
+            } else if (fontSize == 16) {
+                size = 6.5;
+            } else if (fontSize == 18) {
+                size = 7;
+            } else {
+                size = 4.5;
             }
 
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             long px = Math.round(size * (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
             tvStatus.setTextSize(px);
         }
+
         if (!photo.equals("")) {
             ImageLoader.getInstance().displayImage(photo, imgBack, options);
             vBack.setAlpha(0.5f);

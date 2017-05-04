@@ -125,4 +125,6 @@
     <string name="write_status">Write your status</string>
     <string name="no_change">There is no changes!</string>
     <string name="Savingpost">Saving post ...</string>
+    <string name="blockingInputMessage">you have blocked this user</string>
+    <string name="blockedInputMessage">you are blocked by this user</string>
 </resources>

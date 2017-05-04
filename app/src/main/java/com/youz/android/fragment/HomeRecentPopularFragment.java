@@ -119,7 +119,7 @@ public class HomeRecentPopularFragment extends Fragment {
 
         rvPosts = (RecyclerView) layout.findViewById(R.id.rv_posts);
         rvPosts.setHasFixedSize(true);
-        rvPosts.setItemViewCacheSize(300);
+        rvPosts.setItemViewCacheSize(600);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override

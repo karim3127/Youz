@@ -627,6 +627,7 @@ public class NewPost extends BaseActivity {
                         @Override
                         public void run() {
                             progressDialog.dismiss();
+                            setResult(RESULT_OK);
                             finish();
                         }
                     }, 1000);

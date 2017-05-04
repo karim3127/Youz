@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.youz.android.R;
+import com.youz.android.activity.MainActivity;
 import com.youz.android.adapter.PagerProfilAdapter;
 
 public class HomeProfilFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private View layout;
-    private ViewPager vpProfil;
+    public ViewPager vpProfil;
     private SmartTabLayout tabProfil;
     private String defaultLangage;
     private Boolean theLanguageisEnglish = true;
@@ -37,6 +38,8 @@ public class HomeProfilFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((MainActivity) getActivity()).homeProfilFragment = this;
 
         prefs = getActivity().getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         defaultLangage = prefs.getString("Langage","en");

@@ -94,60 +94,76 @@
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="1dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#f5f5f5"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/img_attach"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:src="@drawable/ic_new_post_photo_unselected"
-                android:padding="8dp" />
-
-            <EditText
-                android:id="@+id/et_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Type a message"
-                android:textColorHint="@color/colorGray"
-                android:textColor="@color/colorBlackLight"
-                android:background="#0FFF"
-                android:gravity="left|center_vertical"
-                android:textSize="@dimen/text_normal_size"
-                android:padding="8dp"
-                android:maxLines="3"
-                android:minHeight="48dp" />
-
-            <ViewSwitcher
-                android:id="@+id/switcher"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:inAnimation="@anim/switcher_in"
-                android:outAnimation="@anim/switcher_out">
+            <LinearLayout
+                android:id="@+id/ll_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#f5f5f5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/img_attach"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:src="@drawable/ic_send_gray"
+                    android:src="@drawable/ic_new_post_photo_unselected"
                     android:padding="8dp" />
 
-                <ImageView
-                    android:id="@+id/img_send"
+                <EditText
+                    android:id="@+id/et_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Type a message"
+                    android:textColorHint="@color/colorGray"
+                    android:textColor="@color/colorBlackLight"
+                    android:background="#0FFF"
+                    android:gravity="left|center_vertical"
+                    android:textSize="@dimen/text_normal_size"
+                    android:padding="8dp"
+                    android:maxLines="3"
+                    android:minHeight="48dp" />
+
+                <ViewSwitcher
+                    android:id="@+id/switcher"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:src="@drawable/ic_send_blue"
-                    android:padding="8dp" />
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:inAnimation="@anim/switcher_in"
+                    android:outAnimation="@anim/switcher_out">
 
-            </ViewSwitcher>
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:src="@drawable/ic_send_gray"
+                        android:padding="8dp" />
 
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/img_send"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:src="@drawable/ic_send_blue"
+                        android:padding="8dp" />
+
+                </ViewSwitcher>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v_block_input"
+                android:clickable="true"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/ll_input"
+                android:layout_alignBottom="@+id/ll_input"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

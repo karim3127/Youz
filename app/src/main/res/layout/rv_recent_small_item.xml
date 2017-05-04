@@ -92,7 +92,7 @@
                     android:paddingBottom="4dp">
 
                     <TextView
-                        android:id="@+id/tv_nb_comment"
+                        android:id="@+id/tv_nb_reyouz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -101,9 +101,25 @@
                         android:textSize="@dimen/text_small_size" />
 
                     <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="2dp"
+                        android:src="@drawable/ic_slide_page_0" />
+
+                    <TextView
+                        android:id="@+id/tv_nb_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="50"
+                        android:layout_marginLeft="8dp"
+                        android:textColor="@color/colorGrayLight"
+                        android:textSize="@dimen/text_small_size" />
+
+                    <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="2dp"
                         android:src="@drawable/ic_comment_white" />
 
                     <TextView
@@ -111,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/imgComment"
                         android:text="250"
                         android:textColor="@color/colorGrayLight"
@@ -121,7 +137,7 @@
                         android:id="@+id/lb_fav"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="2dp"
                         android:layout_marginRight="8dp"
                         app:icon_type="heart"
                         app:circle_start_color="@color/colorRed"
