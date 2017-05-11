@@ -83,7 +83,8 @@ public class HomeProfilFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         vpProfil = (ViewPager) layout.findViewById(R.id.vp_profil);
-        vpProfil.setAdapter(new PagerProfilAdapter(getActivity().getSupportFragmentManager(), getContext(),theLanguageisEnglish));
+        vpProfil.setAdapter(new PagerProfilAdapter(getChildFragmentManager(), getContext(),theLanguageisEnglish));
+        vpProfil.setOffscreenPageLimit(3);
 
         tabProfil = (SmartTabLayout) layout.findViewById(R.id.tab_profil);
         tabProfil.setViewPager(vpProfil);

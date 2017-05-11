@@ -118,7 +118,7 @@ public class HomeProfilLikedFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvLikes.setLayoutManager(llm);
 
-        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, true);
+        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false);
         rvLikes.setAdapter(adapter);
 
         getListPosts();

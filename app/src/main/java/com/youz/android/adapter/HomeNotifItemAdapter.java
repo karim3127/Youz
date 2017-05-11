@@ -34,11 +34,9 @@ import com.youz.android.util.UtilUserAvatar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -59,7 +57,6 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
     DatabaseReference mPostRef = mRootRef.getReference("posts");
     DatabaseReference mAlertRef = mRootRef.getReference("alerts");
     Query mPostQuery;
-    public List<String> listUnreadDialog = new ArrayList<>();
 
     public HomeNotifItemAdapter(Context context, List<Pair<String, HashMap<String, Object>>> listItems){
         this.context = context;
@@ -123,13 +120,13 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
 
         if (createdAt.getTime() > (HomeNotifFragment.lastDateConsult)) {
             boolean exist = false;
-            for (int i = 0; i < listUnreadDialog.size(); i++) {
-                if (listUnreadDialog.get(i).equals(listItems.get(position).first)) {
+            for (int i = 0; i < HomeNotifFragment.listUnreadDialog.size(); i++) {
+                if (HomeNotifFragment.listUnreadDialog.get(i).first.equals(listItems.get(position).first)) {
                     exist = true;
                 }
             }
             if (!exist) {
-                listUnreadDialog.add(listItems.get(position).first);
+                HomeNotifFragment.listUnreadDialog.add(new Pair<>(listItems.get(position).first, (String) current.get("postId")));
             }
         }
 
@@ -143,7 +140,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                 if (dataSnapshot.getValue() != null) {
                     HashMap<String, Object> post = (HashMap<String, Object>) dataSnapshot.getValue();
                     String title = (String) post.get("title");
-                    String color = (post.get("color") == null) ? "" : "#" + post.get("color");
+                    String color = (post.get("color") == null) ? "" : (String) post.get("color");
                     String photo = (post.get("photo") == null) ? "" : (String) post.get("photo");
 
                     holder.tvStatus.setText(title);
@@ -156,7 +153,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
 
                     if (!color.equals("")) {
                         try {
-                            holder.vBack.setBackgroundColor(Color.parseColor(color));
+                            holder.vBack.setBackgroundColor(Color.parseColor("#" + color));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -165,18 +162,6 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                     holder.llNotif.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            for (int i = 0; i < listUnreadDialog.size(); i++) {
-                                if (listUnreadDialog.get(i).equals(listItems.get(position).first)) {
-                                    listUnreadDialog.remove(i);
-                                }
-                            }
-                            if (listUnreadDialog.size() > 0) {
-                                MainActivity.tvBadgeNotif.setVisibility(View.VISIBLE);
-                                MainActivity.tvBadgeNotif.setText(listUnreadDialog.size() + "");
-                            } else {
-                                MainActivity.tvBadgeNotif.setVisibility(View.GONE);
-                            }
 
                             context.startActivity(new Intent(context, PostDetails.class));
                             Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
@@ -194,9 +179,9 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
         mPostQuery.addListenerForSingleValueEvent(valueEventListener);
 
 
-        if (listUnreadDialog.size() > 0) {
+        if (HomeNotifFragment.listUnreadDialog.size() > 0) {
             MainActivity.tvBadgeNotif.setVisibility(View.VISIBLE);
-            MainActivity.tvBadgeNotif.setText(listUnreadDialog.size() + "");
+            MainActivity.tvBadgeNotif.setText(HomeNotifFragment.listUnreadDialog.size() + "");
         } else {
             MainActivity.tvBadgeNotif.setVisibility(View.GONE);
         }
@@ -276,7 +261,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                 @Override
                 public void onClick(View view) {
                     if (connectionDetector.isConnectingToInternet()) {
-                        mAlertRef.child(userId).child(alertId).removeValue();
+                        deleteNotif();
                     } else {
                         Toast.makeText(context,context.getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                     }
@@ -284,5 +269,19 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
             });
         }
 
+        public void deleteNotif() {
+            for (int i = 0; i < HomeNotifFragment.listUnreadDialog.size(); i++) {
+                if (HomeNotifFragment.listUnreadDialog.get(i).first.equals(alertId)) {
+                    HomeNotifFragment.listUnreadDialog.remove(i);
+                }
+            }
+            if (HomeNotifFragment.listUnreadDialog.size() > 0) {
+                MainActivity.tvBadgeNotif.setVisibility(View.VISIBLE);
+                MainActivity.tvBadgeNotif.setText(HomeNotifFragment.listUnreadDialog.size() + "");
+            } else {
+                MainActivity.tvBadgeNotif.setVisibility(View.GONE);
+            }
+            mAlertRef.child(userId).child(alertId).removeValue();
+        }
     }
 }

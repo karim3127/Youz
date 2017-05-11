@@ -133,7 +133,7 @@ public class HomeRecentPopularFragment extends Fragment {
         rvPosts.setLayoutManager(gridLayoutManager);
 
         if (adapter == null) {
-            adapter = new HomeRecentItemAdapter(getActivity(), listPosts, true, false);
+            adapter = new HomeRecentItemAdapter(getActivity(), listPosts, true);
             rvPosts.setAdapter(adapter);
 
             getListPosts();

@@ -51,6 +51,7 @@ public class HomeNotifFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private String userId;
     public static long lastDateConsult;
+    public static List<Pair<String, String>> listUnreadDialog = new ArrayList<>();
 
     public HomeNotifFragment() {
         // Required empty public constructor
@@ -94,6 +95,7 @@ public class HomeNotifFragment extends Fragment {
     public void onDestroy() {
         mAlertQuery.removeEventListener(childEventListener);
         editor.putLong("LastDateConsult", new Date().getTime());
+        listUnreadDialog = new ArrayList<>();
         super.onDestroy();
     }
 

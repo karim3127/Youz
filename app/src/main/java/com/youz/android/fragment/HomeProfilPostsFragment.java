@@ -124,7 +124,7 @@ public class HomeProfilPostsFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvPosts.setLayoutManager(llm);
 
-        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, true);
+        adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false);
         rvPosts.setAdapter(adapter);
 
         getListPosts();

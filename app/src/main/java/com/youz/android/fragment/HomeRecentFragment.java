@@ -80,7 +80,8 @@ public class HomeRecentFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         vpRecent = (ViewPager) layout.findViewById(R.id.vp_recent);
-        vpRecent.setAdapter(new PagerRecentAdapter(getActivity().getSupportFragmentManager(), getContext(),theLanguageisEnglish));
+        vpRecent.setAdapter(new PagerRecentAdapter(getChildFragmentManager(), getContext(),theLanguageisEnglish));
+        vpRecent.setOffscreenPageLimit(3);
 
         tabRecent = (SmartTabLayout) layout.findViewById(R.id.tab_recent);
         tabRecent.setViewPager(vpRecent);

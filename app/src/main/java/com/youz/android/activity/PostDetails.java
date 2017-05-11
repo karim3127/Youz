@@ -55,6 +55,8 @@ import com.onesignal.OneSignal;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
+import com.youz.android.fragment.HomeNotifFragment;
+import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.util.ConnectionDetector;
 import com.youz.android.util.UtilDateTime;
 import com.youz.android.util.UtilUserAvatar;
@@ -679,6 +681,7 @@ public class PostDetails extends BaseActivity {
     @Override
     protected void onDestroy() {
         mUserRef.removeEventListener(valueEventListenerUser);
+        notifyHomeNotifBadge();
         super.onDestroy();
     }
 
@@ -703,6 +706,25 @@ public class PostDetails extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void notifyHomeNotifBadge() {
+
+        int i = 0;
+        while (i < HomeNotifFragment.listUnreadDialog.size()) {
+            if (HomeNotifFragment.listUnreadDialog.get(i).second.equals(currentPost.first)) {
+                HomeNotifFragment.listUnreadDialog.remove(i);
+            } else {
+                i++;
+            }
+        }
+
+        if (HomeNotifFragment.listUnreadDialog.size() > 0) {
+            MainActivity.tvBadgeNotif.setVisibility(View.VISIBLE);
+            MainActivity.tvBadgeNotif.setText(HomeNotifFragment.listUnreadDialog.size() + "");
+        } else {
+            MainActivity.tvBadgeNotif.setVisibility(View.GONE);
+        }
     }
 
     public void showPostDetails() {
@@ -771,13 +793,21 @@ public class PostDetails extends BaseActivity {
         tvNbComment.setText(nbComments + "");
         tvNbComment.setTypeface(typeFaceGras);
 
-        if (location.equals("")) {
-            llLocation.setVisibility(View.INVISIBLE);
+        boolean isPublic = (boolean) current.get("public");
+        String postOwner = (String) current.get("postOwner");
+        boolean isFriend = HomeRecentFriendsFragment.listYouzContacts.contains(postOwner);
+        if (isPublic || !isFriend) {
+            if (location.equals("")) {
+                llLocation.setVisibility(View.INVISIBLE);
+            } else {
+                llLocation.setVisibility(View.VISIBLE);
+                tvLocation.setTypeface(typeFaceGras);
+                tvLocation.setText(Html.fromHtml(location + city));
+            }
         } else {
-            llLocation.setVisibility(View.VISIBLE);
-            tvLocation.setTypeface(typeFaceGras);
-            tvLocation.setText(Html.fromHtml(location + city));
+            llLocation.setVisibility(View.INVISIBLE);
         }
+
 
         if (!font.equals("")) {
             try {
@@ -865,7 +895,22 @@ public class PostDetails extends BaseActivity {
                 public int compare(Pair<String,HashMap<String,Object>> item1, Pair<String,HashMap<String,Object>> item2) {
                     String date1 = (String) item1.second.get("createdAt");
                     String date2 = (String) item2.second.get("createdAt");
-                    return date2.compareToIgnoreCase(date1);
+
+                    Date dateValue1 = null;
+                    try {
+                        dateValue1 = format.parse(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Date dateValue2 = null;
+                    try {
+                        dateValue2 = format.parse(date2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    return dateValue1.compareTo(dateValue2);
                 }
             });
 

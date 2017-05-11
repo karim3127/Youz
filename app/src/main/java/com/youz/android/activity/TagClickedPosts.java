@@ -96,7 +96,7 @@ public class TagClickedPosts extends BaseActivity {
         rvPosts.setItemViewCacheSize(100);
         rvPosts.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new HomeRecentItemAdapter(this, listPosts, false, true);
+        adapter = new HomeRecentItemAdapter(this, listPosts, false);
         rvPosts.setAdapter(adapter);
 
         getListTags();

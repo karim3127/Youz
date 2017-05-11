@@ -121,7 +121,7 @@ public class HomeRecentNearFriendsFragment extends Fragment {
         rvPosts.setLayoutManager(llm);
 
         if (adapter == null) {
-            adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false, true);
+            adapter = new HomeRecentItemAdapter(getActivity(), listPosts, false);
             rvPosts.setAdapter(adapter);
 
             getListPosts();

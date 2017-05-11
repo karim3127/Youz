@@ -47,6 +47,7 @@ import com.youz.android.activity.PostDetails;
 import com.youz.android.activity.PostShare;
 import com.youz.android.activity.Tags;
 import com.youz.android.activity.UpdatePost;
+import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.util.ConnectionDetector;
 import com.youz.android.util.UtilDateTime;
 
@@ -77,18 +78,16 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Typeface typeFaceGras;
     ConnectionDetector connectionDetector;
     boolean isSmall;
-    boolean showLocation;
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mPostRef;
     DatabaseReference mAlertRef;
     DatabaseReference mTagRef;
 
-    public HomeRecentItemAdapter(Context context, List<Pair<String, HashMap<String, Object>>> listItems, boolean isSmall, boolean showLocation){
+    public HomeRecentItemAdapter(Context context, List<Pair<String, HashMap<String, Object>>> listItems, boolean isSmall){
         if (context != null) {
             this.context = context;
             this.listItems = listItems;
             this.isSmall = isSmall;
-            this.showLocation = showLocation;
             connectionDetector = new ConnectionDetector(context);
             typeFaceGras = Typeface.createFromAsset(context.getAssets(), "fonts/optima_bold.ttf");
             prefs = context.getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
@@ -240,16 +239,22 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 holder.lbFav.setLiked(false);
             }
 
-            if (showLocation) {
-                if (location.equals("")) {
-                    holder.llLocation.setVisibility(View.INVISIBLE);
+            boolean isPublic = (boolean) current.get("public");
+            String postOwner = (String) current.get("postOwner");
+            boolean isFriend = HomeRecentFriendsFragment.listYouzContacts.contains(postOwner);
+            if (!isSmall) {
+                if (isPublic || !isFriend) {
+                    if (location.equals("")) {
+                        holder.llLocation.setVisibility(View.INVISIBLE);
+                    } else {
+                        holder.llLocation.setVisibility(View.VISIBLE);
+                        holder.tvLocation.setText(location + city);
+                        holder.tvLocation.setTypeface(typeFaceGras);
+                    }
                 } else {
-                    holder.llLocation.setVisibility(View.VISIBLE);
-                    holder.tvLocation.setText(location + city);
-                    holder.tvLocation.setTypeface(typeFaceGras);
+                    holder.llLocation.setVisibility(View.INVISIBLE);
                 }
             }
-
         } else {
 
         }

@@ -57,7 +57,8 @@ public class NotificationExtenderExample extends NotificationExtenderService {
             OSNotificationDisplayedResult result = displayNotification(overrideSettings);
             Log.d("OneSignalExample", "Notification displayed with id: " + result.notificationId);
          } else {
-            //BaseActivity.showMessageCrouton(notification.message);
+            // app is opened
+
          }
       }
       return true;
