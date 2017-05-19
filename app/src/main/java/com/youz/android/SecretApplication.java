@@ -13,6 +13,8 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.onesignal.OSNotificationAction;
+import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 import com.youz.android.activity.BaseActivity;
 import com.youz.android.activity.MainActivity;
@@ -54,8 +56,9 @@ public class SecretApplication extends Application {
         instance = this;
 
         OneSignal.startInit(this)
-                .setAutoPromptLocation(true)
-                .setNotificationOpenedHandler(new MyNotificationOpenedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .setNotificationOpenedHandler(new SecretNotificationOpenedHandler())
+                .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
 
         ButterKnife.setDebug(BuildConfig.DEBUG);
@@ -104,22 +107,23 @@ public class SecretApplication extends Application {
         ACRA.init(this);
     }
 
-    // This fires when a notification is opened by tapping on it or one is received while the app is running.
-    private class MyNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+    class SecretNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+        // This fires when a notification is opened by tapping on it.
         @Override
-        public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
-            try {
-                if (additionalData != null) {
-                    if (additionalData.has("actionSelected"))
-                        Log.d("OneSignalExample", "OneSignal notification button with id " + additionalData.getString("actionSelected") + " pressed");
+        public void notificationOpened(OSNotificationOpenResult result) {
+            OSNotificationAction.ActionType actionType = result.action.type;
+            JSONObject additionalData = result.notification.payload.additionalData;
+            String customKey;
 
-                    Log.d("OneSignalExample", "Full additionalData:\n" + additionalData.toString());
-                }
-            } catch (Throwable t) {
-                t.printStackTrace();
+            if (additionalData != null) {
+                customKey = additionalData.optString("customkey", null);
+                if (customKey != null)
+                    Log.i("OneSignalExample", "customkey set with value: " + customKey);
             }
 
-            // The following can be used to open an Activity of your choice.
+            if (actionType == OSNotificationAction.ActionType.ActionTaken)
+                Log.i("OneSignalExample", "Button pressed with id: " + result.action.actionID);
+
 
             if (BaseActivity.isAppWentToBg) {
                 Intent intent = new Intent(instance, MainActivity.class);
@@ -161,6 +165,20 @@ public class SecretApplication extends Application {
                 startActivity(intent);
             }
 
+            // The following can be used to open an Activity of your choice.
+            // Replace - getApplicationContext() - with any Android Context.
+            // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
+            // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // startActivity(intent);
+
+            // Add the following to your AndroidManifest.xml to prevent the launching of your main Activity
+            //   if you are calling startActivity above.
+     /*
+        <application ...>
+          <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+        </application>
+     */
         }
     }
+
 }

@@ -42,6 +42,7 @@ import com.google.firebase.storage.UploadTask;
 import com.youz.android.R;
 import com.youz.android.adapter.NewPostPhotoItemAdapter;
 import com.youz.android.util.ConnectionDetector;
+import com.youz.android.util.OneSignalUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -579,7 +580,7 @@ public class NewPost extends BaseActivity {
     }
 
     public void savePost(String photoUrl) {
-        String key = mPostRef.push().getKey();
+        final String key = mPostRef.push().getKey();
         final String createdAt = format.format(new Date());
         String title = etStatus.getText().toString().trim();
 
@@ -623,6 +624,10 @@ public class NewPost extends BaseActivity {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError == null) {
+                    if (!isPublic) {
+                        OneSignalUtil.sendNewPostPush(key, userId, MainActivity.locale);
+                    }
+
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {

@@ -39,7 +39,6 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.onesignal.OneSignal;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
@@ -49,10 +48,8 @@ import com.youz.android.activity.Tags;
 import com.youz.android.activity.UpdatePost;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.util.ConnectionDetector;
+import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilDateTime;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -156,7 +153,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             int nbComments = (current.get("comments") == null) ? 0 : ((HashMap<String, Object>) current.get("comments")).size();
             holder.nbReyouz = (current.get("reyouzCount") == null) ? 0 : (long) current.get("reyouzCount");
             String location = (current.get("location") == null) ? "" : (String) current.get("location");
-            String city = (current.get("city") == null) ? "" : " - " + current.get("city");
+            String city = (current.get("city") != null && !((String) current.get("city")).trim().isEmpty()) ? " - " + ((String) current.get("city")).trim() : "";
 
             if (current.get("saves") != null && ((HashMap<String, Object>) current.get("saves")).get(userId) != null) {
                 holder.isSaved = true;
@@ -429,22 +426,8 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             mRootRef.getReference("users").child(postOwner).runTransaction(new Transaction.Handler() {
                                 @Override
                                 public Transaction.Result doTransaction(MutableData mutableData) {
-                                    HashMap<String, Object> userDetails = (HashMap<String, Object>) mutableData.getValue();
+                                    OneSignalUtil.sendLikePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
 
-                                    if ((boolean) userDetails.get("notifsLikes") && userDetails.get("status").equals("offline")) {
-                                        List<String> userIds = new ArrayList<>();
-                                        if (userDetails.get("oneSignalUserId") != null) {
-                                            userIds.add("'" + userDetails.get("oneSignalUserId") + "'");
-                                        }
-
-                                        String messagePush = "Liked your post";
-                                        String userIdsList = userIds.toString();
-                                        try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='like','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
                                     return Transaction.success(mutableData);
                                 }
 
@@ -882,22 +865,9 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             mRootRef.getReference("users").child(postOwner).runTransaction(new Transaction.Handler() {
                                 @Override
                                 public Transaction.Result doTransaction(MutableData mutableData) {
-                                    HashMap<String, Object> userDetails = (HashMap<String, Object>) mutableData.getValue();
 
-                                    if ((boolean) userDetails.get("notifsLikes") && userDetails.get("status").equals("offline")) {
-                                        List<String> userIds = new ArrayList<>();
-                                        if (userDetails.get("oneSignalUserId") != null) {
-                                            userIds.add("'" + userDetails.get("oneSignalUserId") + "'");
-                                        }
+                                    OneSignalUtil.sendSharePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
 
-                                        String messagePush = "Shared your post";
-                                        String userIdsList = userIds.toString();
-                                        try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='share','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
                                     return Transaction.success(mutableData);
                                 }
 

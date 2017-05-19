@@ -52,19 +52,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.onesignal.OneSignal;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
 import com.youz.android.adapter.MessageItemAdapter;
 import com.youz.android.service.UploadImageService;
 import com.youz.android.util.ConnectionDetector;
+import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilUserAvatar;
 import com.youz.android.view.SuperSwipeRefreshLayout;
 import com.youz.android.view.paperonboarding.listeners.AnimatorEndListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -749,21 +746,8 @@ public class ChatMessage extends BaseActivity {
                 }
             });
 
-            HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-            if ((boolean) membersDetails.get("notifsChats") && membersDetails.get("status").equals("offline")) {
-                List<String> userIds = new ArrayList<>();
-                if (membersDetails.get("oneSignalUserId") != null) {
-                    userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                }
+            OneSignalUtil.sendNewMessagePush((HashMap<String, Object>) dataSnapshotUser.getValue(), chatId, userId);
 
-                String messagePush = "You have new chat message";
-                String userIdsList = userIds.toString();
-                try {
-                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
             etMessage.setText("");
 
         } else {

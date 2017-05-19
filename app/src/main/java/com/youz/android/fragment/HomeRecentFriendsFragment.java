@@ -47,7 +47,6 @@ public class HomeRecentFriendsFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_CODE_PICK_CONTACTS = 23;
     private static final int REQUEST_CODE_PICK_CONTACTS = 7;
 
-    private OnFragmentInteractionListener mListener;
     private View layout;
 
     private AVLoadingIndicatorView avloadingIndicatorView;
@@ -92,23 +91,6 @@ public class HomeRecentFriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_home_recent_friends, container, false);
         return layout;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.google.firebase.storage.UploadTask;
 import com.onesignal.OneSignal;
 import com.youz.android.R;
 import com.youz.android.activity.ChatMessage;
+import com.youz.android.util.OneSignalUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -161,23 +162,8 @@ public class UploadImageService extends Service {
                         });
 
                         if (ChatMessage.dataSnapshotUser != null) {
-                            HashMap<String, Object> membersDetails = (HashMap<String, Object>) ChatMessage.dataSnapshotUser.getValue();
-                            if ((boolean) membersDetails.get("notifsChats") && membersDetails.get("status").equals("offline")) {
-                                List<String> userIds = new ArrayList<>();
-                                if (membersDetails.get("oneSignalUserId") != null) {
-                                    userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                                }
+                            OneSignalUtil.sendNewMessagePush((HashMap<String, Object>) ChatMessage.dataSnapshotUser.getValue(), chatId, userId);
 
-                                String userIdsList = userIds.toString();
-                                String messagePush = "You have new chat message";
-
-                                try {
-                                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='chat','chatId':'" + chatId + "','userId':'" + userId + "'},  'include_player_ids': " + userIdsList + "}"), null);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
                         }
 
                         builder.setContentText("Image upload done").setProgress(0, 0, false);

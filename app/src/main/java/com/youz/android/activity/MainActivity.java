@@ -380,7 +380,27 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_NEW_POST) {
             if (resultCode == RESULT_OK) {
-                vpHome.setCurrentItem(3);
+                imgRecent.setSelected(false);
+                imgMessage.setSelected(false);
+                imgNotif.setSelected(false);
+                imgProfil.setSelected(true);
+
+                if (tabSelected != 3) {
+                    animeScaleDown(vIndexRecent);
+                    animeScaleDown(vIndexMessage);
+                    animeScaleDown(vIndexNotif);
+                    animeScaleUp(vIndexProfil);
+                }
+                tabSelected = 3;
+                if (!theLanguageisEnglish) {
+                    vpHome.setCurrentItem(3  - tabSelected, false);
+                }else {
+                    vpHome.setCurrentItem(tabSelected, true);
+                }
+
+                imgTags.setVisibility(View.GONE);
+                imgSetting.setVisibility(View.VISIBLE);
+
                 homeProfilFragment.vpProfil.setCurrentItem(0);
                 homeProfilPostsFragment.rvPosts.post(new Runnable() {
                     @Override

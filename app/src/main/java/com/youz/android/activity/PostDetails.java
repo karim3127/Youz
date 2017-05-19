@@ -51,19 +51,16 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.onesignal.OneSignal;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
 import com.youz.android.fragment.HomeNotifFragment;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.util.ConnectionDetector;
+import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilDateTime;
 import com.youz.android.util.UtilUserAvatar;
 import com.youz.android.view.hashtaghelper.HashTagHelper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -290,21 +287,7 @@ public class PostDetails extends BaseActivity {
 
                         mAlertRef.updateChildren(alertItem);
 
-                        HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-                        if ((boolean) membersDetails.get("notifsLikes") && membersDetails.get("status").equals("offline")) {
-                            List<String> userIds = new ArrayList<>();
-                            if (membersDetails.get("oneSignalUserId") != null) {
-                                userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                            }
-
-                            String messagePush = "Liked your post";
-                            String userIdsList = userIds.toString();
-                            try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='like','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        OneSignalUtil.sendLikePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
                     }
 
                     nbLikes++;
@@ -641,21 +624,7 @@ public class PostDetails extends BaseActivity {
 
                 mAlertRef.updateChildren(alertItem);
 
-                HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-                if ((boolean) membersDetails.get("notifsComments") && membersDetails.get("status").equals("offline")) {
-                    List<String> userIds = new ArrayList<>();
-                    if (membersDetails.get("oneSignalUserId") != null) {
-                        userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                    }
-
-                    String messagePush = "Commented your post";
-                    String userIdsList = userIds.toString();
-                    try {
-                        OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                OneSignalUtil.sendCommentPush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
             }
         } else {
             if (!connectionDetector.isConnectingToInternet()) {
@@ -766,12 +735,11 @@ public class PostDetails extends BaseActivity {
         font = (current.get("font") == null) ? "" : (String) current.get("font");
         fontSize = (current.get("fontSize") == null) ? -1 : (long) current.get("fontSize");
         String location = (current.get("location") == null) ? "" : (String) current.get("location");
-        String city = (current.get("city") == null) ? "" : " - " + current.get("city");
+        String city = (current.get("city") != null && !((String) current.get("city")).trim().isEmpty()) ? " - " + ((String) current.get("city")).trim() : "";
         nbLikes = (current.get("likes") == null) ? 0 : ((HashMap<String, Object>) current.get("likes")).size();
         nbComments = (current.get("comments") == null) ? 0 : ((HashMap<String, Object>) current.get("comments")).size();
         nbReyouz = (current.get("reyouzCount") == null) ? 0 : (long) current.get("reyouzCount");
-
-
+        
         Date dateDialog = null;
         try {
             dateDialog = format.parse((String) current.get("createdAt"));
@@ -910,7 +878,7 @@ public class PostDetails extends BaseActivity {
                         e.printStackTrace();
                     }
 
-                    return dateValue1.compareTo(dateValue2);
+                    return dateValue2.compareTo(dateValue1);
                 }
             });
 
@@ -1394,21 +1362,8 @@ public class PostDetails extends BaseActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getValue() != null) {
 
-                                    HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshot.getValue();
-                                    if ((boolean) membersDetails.get("notifsComments") && membersDetails.get("status").equals("offline")) {
-                                        List<String> userIds = new ArrayList<>();
-                                        if (membersDetails.get("oneSignalUserId") != null) {
-                                            userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                                        }
+                                    OneSignalUtil.sendReplyPush((HashMap<String, Object>) dataSnapshot.getValue(), currentPost.first, userId);
 
-                                        String messagePush = "Replied to your comment";
-                                        String userIdsList = userIds.toString();
-                                        try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
                                 }
                             }
 
@@ -2198,21 +2153,7 @@ public class PostDetails extends BaseActivity {
 
                         mAlertRef.updateChildren(alertItem);
 
-                        HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-                        if ((boolean) membersDetails.get("notifsShares") && membersDetails.get("status").equals("offline")) {
-                            List<String> userIds = new ArrayList<>();
-                            if (membersDetails.get("oneSignalUserId") != null) {
-                                userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
-                            }
-
-                            String messagePush = "Shared your post";
-                            String userIdsList = userIds.toString();
-                            try {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='share','postId':'" + currentPost.first + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        OneSignalUtil.sendSharePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
                     }
                 }
             }
