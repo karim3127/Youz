@@ -809,6 +809,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             newPost.put("title", title);
             newPost.put("postOwner", userId);
             newPost.put("location", prefs.getString("CountryName", ""));
+            newPost.put("locationCode", prefs.getString("CountryCode", ""));
             newPost.put("city", prefs.getString("CityName", ""));
             newPost.put("note", 0);
 

@@ -110,7 +110,7 @@ public class HomeRecentNearFriendsFragment extends Fragment {
         prefs = getContext().getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         userId = prefs.getString("UserId", "");
 
-        mPostPopularQuery = mPostPopularRef.orderByChild("location").equalTo(prefs.getString("CountryName", ""));//
+        mPostPopularQuery = mPostPopularRef.orderByChild("locationCode").equalTo(prefs.getString("CountryCode", ""));
 
         avloadingIndicatorView = (AVLoadingIndicatorView) layout.findViewById(R.id.avloadingIndicatorView);
         rlNoPost = (RelativeLayout) layout.findViewById(R.id.rl_no_post);

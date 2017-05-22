@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,10 +45,13 @@ import com.youz.android.fragment.HomeProfilSavedFragment;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
 import com.youz.android.fragment.HomeRecentNearFriendsFragment;
 import com.youz.android.fragment.HomeRecentPopularFragment;
+import com.youz.android.model.Country;
 import com.youz.android.service.GPSTracker;
 import com.youz.android.view.NonSwipeableViewPager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,8 +122,10 @@ public class MainActivity extends BaseActivity {
     public static List<String> listYouzBlocks = new ArrayList<>();
     public static TextView tvBadgeMsg, tvBadgeNotif;
     public static Context context;
+    public static String localeCode;
     public static String locale;
     public static String city;
+    List<Country> mCountriesList = new ArrayList<Country>();
     private int tabSelected = 0;
 
     public HomeRecentFriendsFragment homeRecentFriendsFragment;
@@ -174,6 +180,8 @@ public class MainActivity extends BaseActivity {
         tvBadgeMsg = (TextView) findViewById(R.id.tv_badge_msg);
         tvBadgeNotif = (TextView) findViewById(R.id.tv_badge_notif);
 
+        (new CountryAsyncTask()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
         } else {
@@ -216,6 +224,7 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+
     }
 
 
@@ -544,15 +553,12 @@ public class MainActivity extends BaseActivity {
 
         GPSTracker tracker = new GPSTracker(MainActivity.this);
         if (!tracker.canGetLocation()) {
-
             tracker.showSettingsAlert();
-
-            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.repeat_after_setting), Toast.LENGTH_LONG).show();
-
         } else {
 
             String cityName = "";
             String countryName = "";
+            String countryCode = "";
 
             latitude = tracker.getLatitude();
             longitude = tracker.getLongitude();
@@ -582,7 +588,6 @@ public class MainActivity extends BaseActivity {
             List<Address> addresses = null;
             try {
                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -593,73 +598,48 @@ public class MainActivity extends BaseActivity {
                 if (cityName == null)
                     cityName = "";
 
-                try {
-                    countryName =  addresses.get(0).getCountryName();
-                } catch (Exception e) {
-                    countryName = "";
-                }
-
-                if (!TextUtils.isEmpty(cityName) && cityName != null) {
+                if (cityName != null && !cityName.isEmpty()) {
                     editor.putString("CityName", cityName);
                     editor.commit();
                 } else {
                         cityName = prefs.getString("CityName", "");
                 }
 
-                if (!TextUtils.isEmpty(countryName) && countryName != null) {
+                try {
+                    countryCode =  addresses.get(0).getCountryCode();
+                } catch (Exception e) {
+                    countryCode = "";
+                }
+
+                if (!TextUtils.isEmpty(countryCode) && countryCode != null) {
+                    editor.putString("CountryCode", countryCode);
+                    editor.commit();
+                } else {
+                    countryCode = prefs.getString("CountryCode", "");
+                }
+
+                for (int i = 0; i < mCountriesList.size(); i++) {
+                    if (countryCode.toLowerCase().equals((mCountriesList.get(i).getCountryISO() + "").toLowerCase())) {
+                        countryName = mCountriesList.get(i).getName();
+                    }
+                }
+
+                if (countryName != null && !countryName.isEmpty()) {
                     editor.putString("CountryName", countryName);
                     editor.commit();
                 } else {
-                    try {
-                        countryName = prefs.getString("CountryName", "");
-                        if (countryName == null)
-                            countryName = "";
-                    } catch (Exception e) {
-                        countryName = "";
-                    }
+                    countryName = prefs.getString("CountryName", "");
                 }
 
             } else {
-
-                try {
-                    countryName = prefs.getString("CountryName", "");
-                    if (countryName == null)
-                        countryName = "";
-                } catch (Exception e) {
-                    countryName = "";
-                }
-
-
-                try {
-                    cityName = prefs.getString("CityName", "");
-                    if (cityName == null)
-                        cityName = "";
-                } catch (Exception e) {
-                    cityName = "";
-                }
-
+                countryName = prefs.getString("CountryName", "");
+                cityName = prefs.getString("CityName", "");
             }
 
-            city = cityName;
+            localeCode = countryCode;
             locale = countryName;
+            city = cityName;
         }
-
-        /*LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Geocoder geocoder = new Geocoder(this);
-        for(String provider: lm.getAllProviders()) {
-            @SuppressWarnings("ResourceType") Location location = lm.getLastKnownLocation(provider);
-            if(location!=null) {
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if(addresses != null && addresses.size() > 0) {
-                        city = addresses.get(0).getLocality();
-                        return addresses.get(0).getCountryName();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
     }
 
     public void sendMessageResult(String message) {
@@ -670,4 +650,37 @@ public class MainActivity extends BaseActivity {
         broadcaster.sendBroadcast(intent);
     }
 
+    protected class CountryAsyncTask extends AsyncTask<Void, Void, ArrayList<Country>> {
+
+        @Override
+        protected ArrayList<Country> doInBackground(Void... params) {
+            ArrayList<Country> data = new ArrayList<Country>(233);
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new InputStreamReader(getAssets().open("countries.dat"), "UTF-8"));
+
+                // do reading, usually loop until end of file reading
+                String line;
+                int i = 0;
+                while ((line = reader.readLine()) != null) {
+                    //process line
+                    Country c = new Country(MainActivity.this, line, i);
+                    mCountriesList.add(c);
+                    i++;
+                }
+            } catch (IOException e) {
+                //log the exception
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        //log the exception
+                    }
+                }
+            }
+
+            return data;
+        }
+    }
 }
