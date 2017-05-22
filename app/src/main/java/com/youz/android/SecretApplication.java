@@ -83,16 +83,16 @@ public class SecretApplication extends Application {
         if (prefs.getString("Langage", "").equals("")) {
             SharedPreferences.Editor editor = prefs.edit();
             if (defaultLangage.equals("ar") ) {
-                editor.putString("Langage", "ar");
+                editor.putString("Langage", "en_AU");
             } else if (defaultLangage.equals("fr") ) {
-                editor.putString("Langage", "fr");
+                editor.putString("Langage", "en_CA");
             }else {
-                editor.putString("Langage", "en");
+                editor.putString("Langage", "en_US");
             }
             editor.apply();
         }
 
-        Locale locale = new Locale(prefs.getString("Langage", "en"));
+        Locale locale = new Locale(prefs.getString("Langage", "en_US"));
         Locale.setDefault(locale);
         Configuration configLanguage = new Configuration();
         configLanguage.locale = locale;

@@ -165,10 +165,10 @@ public class MainActivity extends BaseActivity {
         prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         editor = prefs.edit();
         userId = prefs.getString("UserId", "");
-        defaultLangage = prefs.getString("Langage","en");
+        defaultLangage = prefs.getString("Langage","en_US");
         broadcaster = LocalBroadcastManager.getInstance(this);
 
-        if (defaultLangage.equals("ar") || defaultLangage.equals("wi")) {
+        if (defaultLangage.equals("en_AU")) {
             theLanguageisEnglish = false;
         }else{
             theLanguageisEnglish = true;

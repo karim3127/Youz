@@ -281,8 +281,7 @@ public class Setting extends BaseActivity {
 
     @OnClick(R.id.rl_Language)
     void showLnaguage() {
-
-        defaultLangage = prefs.getString("Langage","en");
+        defaultLangage = prefs.getString("Langage","en_US");
         showPopupChooseLanguage();
     }
 
@@ -376,9 +375,9 @@ public class Setting extends BaseActivity {
         dialog.setCancelable(true);
 
         View dialogView;
-        if (defaultLangage.equals("ar")) {
+        if (defaultLangage.equals("en_AU")) {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup_ar, null);
-        }else if (defaultLangage.equals("fr")) {
+        }else if (defaultLangage.equals("en_CA")) {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup_fr, null);
         }else {
             dialogView = LayoutInflater.from(this).inflate(R.layout.layout_choose_language_popup, null);
@@ -392,11 +391,11 @@ public class Setting extends BaseActivity {
         final RadioButton rb2 = (RadioButton) dialogView.findViewById(R.id.rb2);
         final RadioButton rb3 = (RadioButton) dialogView.findViewById(R.id.rb3);
 
-        if (defaultLangage.equals("ar"))
+        if (defaultLangage.equals("en_AU"))
             rb1.setChecked(true);
-        if (defaultLangage.equals("en"))
+        if (defaultLangage.equals("en_US"))
             rb2.setChecked(true);
-        if (defaultLangage.equals("fr"))
+        if (defaultLangage.equals("en_CA"))
             rb3.setChecked(true);
 
         rb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -435,11 +434,11 @@ public class Setting extends BaseActivity {
             public void onClick(View view) {
 
                 Locale myLocale = null;
-                if (rb1.isChecked() && !defaultLangage.equals("ar")) {
+                if (rb1.isChecked() && !defaultLangage.equals("en_AU")) {
 
-                    editor.putString("Langage", "ar");
+                    editor.putString("Langage", "en_AU");
                     editor.apply();
-                    myLocale = new Locale("ar");
+                    myLocale = new Locale("en_AU");
                     Resources res = getResources();
                     DisplayMetrics dm = res.getDisplayMetrics();
                     Configuration conf = res.getConfiguration();
@@ -449,11 +448,11 @@ public class Setting extends BaseActivity {
                     finishAffinity();
                     startActivity(intent);
 
-                } else if (rb2.isChecked() && !defaultLangage.equals("en")) {
+                } else if (rb2.isChecked() && !defaultLangage.equals("en_US")) {
 
-                    editor.putString("Langage", "en");
+                    editor.putString("Langage", "en_US");
                     editor.apply();
-                    myLocale = new Locale("en");
+                    myLocale = new Locale("en_US");
                     Resources res = getResources();
                     DisplayMetrics dm = res.getDisplayMetrics();
                     Configuration conf = res.getConfiguration();
@@ -463,11 +462,11 @@ public class Setting extends BaseActivity {
                     finishAffinity();
                     startActivity(intent);
 
-                } else if (rb3.isChecked() && !defaultLangage.equals("fr")) {
+                } else if (rb3.isChecked() && !defaultLangage.equals("en_CA")) {
 
-                    editor.putString("Langage", "fr");
+                    editor.putString("Langage", "en_CA");
                     editor.apply();
-                    myLocale = new Locale("fr");
+                    myLocale = new Locale("en_CA");
                     Resources res = getResources();
                     DisplayMetrics dm = res.getDisplayMetrics();
                     Configuration conf = res.getConfiguration();

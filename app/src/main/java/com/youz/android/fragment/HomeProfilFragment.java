@@ -42,9 +42,9 @@ public class HomeProfilFragment extends Fragment {
         ((MainActivity) getActivity()).homeProfilFragment = this;
 
         prefs = getActivity().getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
-        defaultLangage = prefs.getString("Langage","en");
+        defaultLangage = prefs.getString("Langage","en_US");
 
-        if (defaultLangage.equals("ar") || defaultLangage.equals("wi")) {
+        if (defaultLangage.equals("en_AU")) {
             theLanguageisEnglish = false;
         }else{
             theLanguageisEnglish = true;
