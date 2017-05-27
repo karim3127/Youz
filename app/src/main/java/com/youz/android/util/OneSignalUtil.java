@@ -112,10 +112,10 @@ public class OneSignalUtil {
         }
     }
 
-    public static void sendNewPostPush(final String postId, final String userId, String currentLocationCode) {
+    public static void sendNewPostPush(final String postId, final String userId, String currentLocation) {
         final FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
         Query mContactRef = mRootRef.getReference("contacts").orderByChild(userId).equalTo(true);
-        Query mNearUserRef = mRootRef.getReference("users").orderByChild("locationCode").equalTo(currentLocationCode);
+        Query mNearUserRef = mRootRef.getReference("users").orderByChild("location").equalTo(currentLocation);
 
         final List<String> listUserId = new ArrayList<>();
         final List<String> listUserOneSignalIds = new ArrayList<>();

@@ -625,7 +625,7 @@ public class NewPost extends BaseActivity {
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError == null) {
                     if (!isPublic) {
-                        OneSignalUtil.sendNewPostPush(key, userId, MainActivity.localeCode);
+                        OneSignalUtil.sendNewPostPush(key, userId, MainActivity.locale);
                     }
 
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
