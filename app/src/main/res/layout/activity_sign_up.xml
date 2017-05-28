@@ -156,7 +156,7 @@
                 android:textSize="@dimen/text_normal_size"
                 android:gravity="center"
                 android:lines="2"
-                android:paddingTop="24dp" />
+                android:paddingTop="16dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_normal_size"
                     android:gravity="center"
-                    android:paddingTop="24dp" />
+                    android:paddingTop="8dp" />
 
                 <View
                     android:layout_width="match_parent"

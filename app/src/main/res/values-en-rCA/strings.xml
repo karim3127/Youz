@@ -81,7 +81,7 @@
     <string name="notif_like">Aimer votre poste</string>
     <string name="notif_comment">Commenter votre poste</string>
     <string name="notif_reply">Répondre à votre commentaire</string>
-    <string name="notif_share">Partager votre poste</string>
+    <string name="notif_share">Reyouz votre poste</string>
     <string name="Delete_image">Supprimer le message</string>
     <string name="Download_image">Télécharger l\'image</string>
     <string name="Delete_message">Supprimer le message</string>
@@ -90,8 +90,8 @@
     <string name="Incorrect_code">Code incorrect</string>
     <string name="next">Suivant</string>
     <string name="phone_numer">Numéro de téléphone</string>
-    <string name="info_sent_code">Nous vous enverrons un code de vérification\\npour confirmer votre numéro</string>
-    <string name="info_delai_code">Vous devriez recevoir un code de vérification\\ndans les 30 secondes</string>
+    <string name="info_sent_code">Nous vous enverrons un code de vérification \n pour confirmer votre numéro</string>
+    <string name="info_delai_code">Vous devriez recevoir un code de vérification \n dans les 30 secondes</string>
     <string name="press_to_new_code">Appuyez ici pour entrer un nouveau numéro de téléphone</string>
     <string name="settings_share_with_friend">Partager avec des amis</string>
     <string name="about_youz">A propos Youz</string>
@@ -117,8 +117,8 @@
     <string name="dialog_message_delete_comment">Voulez-vous supprimer ce commentaire ?</string>
     <string name="info_share_done">Le partage a été fait</string>
     <string name="title_abuse">Abuse report</string>
-    <string name="share_twitter">Partage sur\\nTwitter</string>
-    <string name="share_facebook">Partage sur\\nFacebook</string>
+    <string name="share_twitter">Partage sur\nTwitter</string>
+    <string name="share_facebook">Partage sur\nFacebook</string>
     <string name="title_activity_share">Pour publier cette poste, sélectionnez l\'option Partager!</string>
     <string name="Updatingpost">Mise à jour de la poste ...</string>
     <string name="write_status">Écrivez votre statut</string>

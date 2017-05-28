@@ -42,6 +42,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
+import com.youz.android.activity.MainActivity;
 import com.youz.android.activity.PostDetails;
 import com.youz.android.activity.PostShare;
 import com.youz.android.activity.Tags;
@@ -867,7 +868,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 public Transaction.Result doTransaction(MutableData mutableData) {
 
                                     OneSignalUtil.sendSharePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
-
+                                    OneSignalUtil.sendNewPostPush(postId, userId, MainActivity.locale);
                                     return Transaction.success(mutableData);
                                 }
 

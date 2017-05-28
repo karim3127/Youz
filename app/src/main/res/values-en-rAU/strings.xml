@@ -82,7 +82,7 @@
     <string name="notif_like">Liked your post</string>
     <string name="notif_comment">Commented your post</string>
     <string name="notif_reply">Replied to your comment</string>
-    <string name="notif_share">Sahred your post</string>
+    <string name="notif_share">Reyouzed your post</string>
     <string name="Delete_image">Delete message</string>
     <string name="Download_image">Download image</string>
     <string name="Delete_message">Delete message</string>
@@ -91,8 +91,8 @@
     <string name="Incorrect_code">Incorrect code</string>
     <string name="next">next</string>
     <string name="phone_numer">Phone number</string>
-    <string name="info_sent_code">We will send you a verification code\\nto confirme your number</string>
-    <string name="info_delai_code">You should receive a verification code\\nwithin 30 secs</string>
+    <string name="info_sent_code">We will send you a verification code \n to confirme your number</string>
+    <string name="info_delai_code">You should receive a verification code \n within 30 secs</string>
     <string name="press_to_new_code">Press here to enter new phone number</string>
     <string name="settings_share_with_friend">Share with friends</string>
     <string name="about_youz">About Youz</string>

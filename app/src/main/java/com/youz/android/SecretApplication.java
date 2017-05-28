@@ -82,9 +82,9 @@ public class SecretApplication extends Application {
         SharedPreferences prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         if (prefs.getString("Langage", "").equals("")) {
             SharedPreferences.Editor editor = prefs.edit();
-            if (defaultLangage.equals("ar") ) {
+            if (defaultLangage.equals("ar")) {
                 editor.putString("Langage", "en_AU");
-            } else if (defaultLangage.equals("fr") ) {
+            } else if (defaultLangage.equals("fr")) {
                 editor.putString("Langage", "en_CA");
             }else {
                 editor.putString("Langage", "en_US");

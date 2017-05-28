@@ -56,8 +56,8 @@ public class Setting extends BaseActivity {
     @BindView(R.id.switch_new_post)
     Switch switchNewPost;
 
-    @BindView(R.id.switch_share)
-    Switch switchShare;
+    @BindView(R.id.switch_reyouz)
+    Switch switchReyouz;
 
     @BindView(R.id.switch_message)
     Switch switchMessage;
@@ -104,11 +104,11 @@ public class Setting extends BaseActivity {
         tvToolbar.setTypeface(typeFaceGras);
 
         switchMessage.setChecked(prefs.getBoolean("notifsChats", true));
-        switchShare.setChecked(prefs.getBoolean("notifsShares", true));
+        switchReyouz.setChecked(prefs.getBoolean("notifsShares", true));
         switchLike.setChecked(prefs.getBoolean("notifsLikes", true));
         switchComment.setChecked(prefs.getBoolean("notifsComments", true));
         switchNewPost.setChecked(prefs.getBoolean("notifsPosts", true));
-        switchAll.setChecked(switchComment.isChecked() && switchMessage.isChecked() && switchNewPost.isChecked() && switchLike.isChecked() && switchShare.isChecked());
+        switchAll.setChecked(switchComment.isChecked() && switchMessage.isChecked() && switchNewPost.isChecked() && switchLike.isChecked());
 
         rbPublic.setChecked(prefs.getBoolean("enablePublicChat", true));
         rbFriend.setChecked(!prefs.getBoolean("enablePublicChat", true));
@@ -119,12 +119,12 @@ public class Setting extends BaseActivity {
                 if (checked && isAllTouched) {
                     switchLike.setChecked(true);
                     switchNewPost.setChecked(true);
-                    switchShare.setChecked(true);
+                    switchReyouz.setChecked(true);
                     switchMessage.setChecked(true);
                     switchComment.setChecked(true);
                 } else if (isAllTouched){
                     switchLike.setChecked(false);
-                    switchShare.setChecked(false);
+                    switchReyouz.setChecked(false);
                     switchNewPost.setChecked(false);
                     switchMessage.setChecked(false);
                     switchComment.setChecked(false);
@@ -160,7 +160,7 @@ public class Setting extends BaseActivity {
                     changeNotifPermission("notifsLikes", false);
                 } else {
                     changeNotifPermission("notifsLikes", true);
-                    if (switchNewPost.isChecked() && switchShare.isChecked() && switchComment.isChecked() && switchMessage.isChecked()) {
+                    if (switchNewPost.isChecked() && switchComment.isChecked() && switchMessage.isChecked() && switchReyouz.isChecked()) {
                         switchAll.setChecked(true);
                     }
                 }
@@ -175,7 +175,7 @@ public class Setting extends BaseActivity {
                     changeNotifPermission("notifsPosts", false);
                 } else {
                     changeNotifPermission("notifsPosts", true);
-                    if (switchLike.isChecked() && switchShare.isChecked() && switchComment.isChecked() && switchMessage.isChecked()){
+                    if (switchLike.isChecked() && switchComment.isChecked() && switchMessage.isChecked() && switchReyouz.isChecked()){
                         switchAll.setChecked(true);
                     }
                 }
@@ -190,7 +190,7 @@ public class Setting extends BaseActivity {
                     changeNotifPermission("notifsComments", false);
                 } else {
                     changeNotifPermission("notifsComments", true);
-                    if (switchLike.isChecked() && switchShare.isChecked() && switchNewPost.isChecked() && switchMessage.isChecked()){
+                    if (switchLike.isChecked() && switchNewPost.isChecked() && switchMessage.isChecked() && switchReyouz.isChecked()){
                         switchAll.setChecked(true);
                     }
                 }
@@ -205,14 +205,14 @@ public class Setting extends BaseActivity {
                     changeNotifPermission("notifsChats", false);
                 } else {
                     changeNotifPermission("notifsChats", true);
-                    if (switchLike.isChecked() && switchShare.isChecked() && switchComment.isChecked() && switchNewPost.isChecked()){
+                    if (switchLike.isChecked() && switchComment.isChecked() && switchNewPost.isChecked() && switchReyouz.isChecked()){
                         switchAll.setChecked(true);
                     }
                 }
             }
         });
 
-        switchShare.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+        switchReyouz.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
                 if (!checked) {

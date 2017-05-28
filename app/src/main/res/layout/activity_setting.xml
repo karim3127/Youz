@@ -170,7 +170,7 @@
                     android:layout_marginRight="16dp" />
 
                 <com.rey.material.widget.Switch
-                    android:id="@+id/switch_share"
+                    android:id="@+id/switch_reyouz"
                     style="@style/Material.Widget.Switch"
                     android:layout_width="66dp"
                     android:layout_height="wrap_content"

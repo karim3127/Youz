@@ -30,7 +30,7 @@ public class OneSignalUtil {
                 userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
             }
 
-            String messagePush = "Liked your post";
+            String messagePush = "Someone liked your post";
             String userIdsList = userIds.toString();
             try {
                 OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='like','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
@@ -48,7 +48,7 @@ public class OneSignalUtil {
                 userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
             }
 
-            String messagePush = "Commented your post";
+            String messagePush = "Someone commented your post";
             String userIdsList = userIds.toString();
             try {
                 OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
@@ -66,7 +66,7 @@ public class OneSignalUtil {
                 userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
             }
 
-            String messagePush = "Replied to your comment";
+            String messagePush = "Someone replied to your comment";
             String userIdsList = userIds.toString();
             try {
                 OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='comment','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
@@ -84,7 +84,7 @@ public class OneSignalUtil {
                 userIds.add("'" + membersDetails.get("oneSignalUserId") + "'");
             }
 
-            String messagePush = "Shared your post";
+            String messagePush = "Someone reyouzed your post";
             String userIdsList = userIds.toString();
             try {
                 OneSignal.postNotification(new JSONObject("{'contents': {'en':'" + messagePush + "'}, 'ios_sound': 'Notification.mp3', 'data': {'type'='share','postId':'" + postId + "','userId':'" + userId + "'}, 'include_player_ids': " + userIdsList + "}"), null);
@@ -119,6 +119,30 @@ public class OneSignalUtil {
 
         final List<String> listUserId = new ArrayList<>();
         final List<String> listUserOneSignalIds = new ArrayList<>();
+
+        ValueEventListener valueEventListenerNearUser = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, Object> users = (HashMap<String, Object>) dataSnapshot.getValue();
+
+                for (Map.Entry<String, Object> user : users.entrySet()) {
+                    HashMap<String, Object> userDetails = (HashMap<String, Object>) user.getValue();
+                    if (userDetails != null && (boolean) userDetails.get("notifsPosts") && userDetails.get("status").equals("offline")) {
+                        if (userDetails.get("oneSignalUserId") != null) {
+                            if (!listUserOneSignalIds.contains((String) userDetails.get("oneSignalUserId"))) {
+                                listUserOneSignalIds.add("'" + userDetails.get("oneSignalUserId") + "'");
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mNearUserRef.addListenerForSingleValueEvent(valueEventListenerNearUser);
 
         ValueEventListener valueEventListenerContact = new ValueEventListener() {
             @Override
@@ -173,28 +197,5 @@ public class OneSignalUtil {
         };
         mContactRef.addListenerForSingleValueEvent(valueEventListenerContact);
 
-        ValueEventListener valueEventListenerNearUser = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, Object> users = (HashMap<String, Object>) dataSnapshot.getValue();
-
-                for (Map.Entry<String, Object> user : users.entrySet()) {
-                    HashMap<String, Object> userDetails = (HashMap<String, Object>) user.getValue();
-                    if (userDetails != null && (boolean) userDetails.get("notifsPosts") && userDetails.get("status").equals("offline")) {
-                        if (userDetails.get("oneSignalUserId") != null) {
-                            if (!listUserOneSignalIds.contains((String) userDetails.get("oneSignalUserId"))) {
-                                listUserOneSignalIds.add("'" + userDetails.get("oneSignalUserId") + "'");
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mNearUserRef.addListenerForSingleValueEvent(valueEventListenerNearUser);
     }
 }

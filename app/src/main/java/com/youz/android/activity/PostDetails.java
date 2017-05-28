@@ -1361,9 +1361,7 @@ public class PostDetails extends BaseActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getValue() != null) {
-
                                     OneSignalUtil.sendReplyPush((HashMap<String, Object>) dataSnapshot.getValue(), currentPost.first, userId);
-
                                 }
                             }
 
@@ -2154,6 +2152,7 @@ public class PostDetails extends BaseActivity {
                         mAlertRef.updateChildren(alertItem);
 
                         OneSignalUtil.sendSharePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
+                        OneSignalUtil.sendNewPostPush(currentPost.first, userId, MainActivity.locale);
                     }
                 }
             }
