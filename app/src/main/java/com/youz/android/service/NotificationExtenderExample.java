@@ -18,7 +18,6 @@ public class NotificationExtenderExample extends NotificationExtenderService {
    protected boolean onNotificationProcessing(OSNotificationReceivedResult receivedResult) {
       // Read properties from result.
 
-
       prefs = getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
 
       if (!prefs.getString("UserId", "").equals("")) {
@@ -45,14 +44,19 @@ public class NotificationExtenderExample extends NotificationExtenderService {
 
             OSNotificationDisplayedResult result = displayNotification(overrideSettings);
             Log.d("OneSignalExample", "Notification displayed with id: " + result.androidNotificationId);
+
+            return false;
          } else {
             // app is opened
 
+            return true;
          }
+
+      } else {
+         return true;
       }
 
       // Return true to stop the notification from displaying.
-      return false;
    }
 
 }

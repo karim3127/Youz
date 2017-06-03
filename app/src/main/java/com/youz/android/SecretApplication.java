@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.util.Log;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -49,9 +47,6 @@ public class SecretApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         instance = this;
 

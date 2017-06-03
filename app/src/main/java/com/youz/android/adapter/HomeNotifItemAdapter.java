@@ -42,6 +42,7 @@ import java.util.TimeZone;
 /**
  * Created by macbook on 12/05/15.
  */
+
 public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdapter.MyViewHolder> {
 
     SharedPreferences prefs;
@@ -77,7 +78,6 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                 .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
-
     }
 
     @Override
@@ -93,6 +93,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
         HashMap<String, Object> current = listItems.get(position).second;
 
         holder.alertId = listItems.get(position).first;
+        holder.postId = (String) current.get("postId");
 
         String type = (String) current.get("type");
         if (type.equals("like")) {
@@ -158,16 +159,6 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                             e.printStackTrace();
                         }
                     }
-
-                    holder.llNotif.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            context.startActivity(new Intent(context, PostDetails.class));
-                            Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
-                            PostDetails.currentPost = item;
-                        }
-                    });
                 }
             }
 
@@ -222,7 +213,6 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
             } else {
                 pos++;
             }
-
         }
 
         listItems.add(pos, item);
@@ -240,6 +230,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
         View vBack;
 
         String alertId;
+        String postId;
 
 
         public MyViewHolder(View itemView) {
@@ -265,6 +256,32 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
                     } else {
                         Toast.makeText(context,context.getString(R.string.conx_down), Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+
+
+            llNotif.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    mPostQuery = mPostRef.child(postId);
+                    ValueEventListener valueEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() != null) {
+
+                                context.startActivity(new Intent(context, PostDetails.class));
+                                Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
+                                PostDetails.currentPost = item;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    mPostQuery.addListenerForSingleValueEvent(valueEventListener);
                 }
             });
         }

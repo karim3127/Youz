@@ -84,7 +84,7 @@
                     android:id="@+id/et_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Your secret texte"
+                    android:hint="Your Y texte"
                     android:textColorHint="@color/colorAccent"
                     android:textColor="@color/colorAccent"
                     android:background="#0FFF"

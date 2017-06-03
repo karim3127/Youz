@@ -168,9 +168,9 @@
             android:stopWithTask="false" />
         <service
             android:name=".service.NotificationExtenderExample"
-            android:exported="false"
-            android:stopWithTask="false"
-            android:enabled="true">
+            android:exported="true"
+            android:enabled="true"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.onesignal.NotificationExtender" />
             </intent-filter>
