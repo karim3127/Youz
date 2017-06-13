@@ -41,8 +41,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.youz.android.R;
 import com.youz.android.adapter.NewPostPhotoItemAdapter;
+import com.youz.android.util.BackendlessUtil;
 import com.youz.android.util.ConnectionDetector;
-import com.youz.android.util.OneSignalUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -219,7 +219,7 @@ public class NewPost extends BaseActivity {
     public Uri fileUri;
     public boolean hasImage = false;
     public boolean hasColor = false;
-    public boolean isPublic = true;
+    public boolean isPublic = false;
     public String postColor = "";
     public String chosedpostColor = "";
     String postFont = "";
@@ -625,7 +625,7 @@ public class NewPost extends BaseActivity {
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError == null) {
                     if (!isPublic) {
-                        OneSignalUtil.sendNewPostPush(key, userId, MainActivity.locale);
+                        BackendlessUtil.sendNewPostPush(key, userId, MainActivity.locale);
                     }
 
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

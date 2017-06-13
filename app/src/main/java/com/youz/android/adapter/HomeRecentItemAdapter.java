@@ -48,8 +48,8 @@ import com.youz.android.activity.PostShare;
 import com.youz.android.activity.Tags;
 import com.youz.android.activity.UpdatePost;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
+import com.youz.android.util.BackendlessUtil;
 import com.youz.android.util.ConnectionDetector;
-import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilDateTime;
 
 import java.text.ParseException;
@@ -269,6 +269,64 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyItemInserted(getItemCount());
     }
 
+    public void addTagPostItemInRightPosition(Pair<String, HashMap<String, Object>> item) {
+        HashMap<String, Object> itemDetails = item.second;
+
+        String postOwner = (String) itemDetails.get("postOwner");
+        boolean isFriend = HomeRecentFriendsFragment.listYouzContacts.contains(postOwner);
+        long itemNote = (itemDetails.get("note") != null) ? (long) itemDetails.get("note") : 0;
+
+        int pos = 0;
+        boolean isHere = false;
+        while (pos < getItemCount() && !isHere) {
+
+            HashMap<String, Object> dialogCurrent = listItems.get(pos).second;
+
+            boolean isCurrentFriend = HomeRecentFriendsFragment.listYouzContacts.contains(dialogCurrent.get("postOwner"));
+            long currentNote = (dialogCurrent.get("note") != null) ? (long) dialogCurrent.get("note") : 0;
+
+            if (isCurrentFriend == isFriend) {
+                if (itemNote > currentNote) {
+                    isHere = true;
+                } else if (itemNote == currentNote) {
+                    String itemDate = (String) itemDetails.get("createdAt");
+
+                    Date dateNew = null;
+                    try {
+                        dateNew = format.parse(itemDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    String lastDate = (String) dialogCurrent.get("createdAt");
+                    Date dateDialog = null;
+                    try {
+                        dateDialog = format.parse(lastDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (dateNew.compareTo(dateDialog) > 0) {
+                        isHere = true;
+                    } else {
+                        pos++;
+                    }
+                } else {
+                    pos++;
+                }
+            } else {
+                if (isCurrentFriend) {
+                    pos++;
+                } else {
+                    isHere = true;
+                }
+            }
+
+        }
+        listItems.add(pos, item);
+        notifyItemInserted(pos);
+    }
+
     public void addPopularItemInRightPosition(Pair<String, HashMap<String, Object>> item) {
         HashMap<String, Object> itemDetails = item.second;
         long itemNote = (itemDetails.get("note") != null) ? (long) itemDetails.get("note") : 0;
@@ -309,6 +367,70 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
         }
+        listItems.add(pos, item);
+        notifyItemInserted(pos);
+    }
+
+    public void addNearByItemInRightPosition(Pair<String, HashMap<String, Object>> item) {
+        HashMap<String, Object> itemDetails = item.second;
+
+        String itemCity = (itemDetails.get("city") != null) ? ((String) itemDetails.get("city")).toLowerCase() : "";
+        String itemDate = (String) itemDetails.get("createdAt");
+
+        Date dateNew = null;
+        try {
+            dateNew = format.parse(itemDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int pos = 0;
+        boolean isHere = false;
+        while (pos < getItemCount() && !isHere) {
+
+            HashMap<String, Object> dialogCurrent = listItems.get(pos).second;
+
+            String currentCity = (dialogCurrent.get("city") != null) ? ((String) dialogCurrent.get("city")).toLowerCase() : "";
+            String lastDate = (String) dialogCurrent.get("createdAt");
+
+
+            if (MainActivity.city != null && !MainActivity.city.isEmpty()) {
+                if (itemCity.equals(MainActivity.city.toLowerCase()) && currentCity.equals(MainActivity.city.toLowerCase())) {
+                    Date dateDialog = null;
+                    try {
+                        dateDialog = format.parse(lastDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (dateNew.compareTo(dateDialog) > 0) {
+                        isHere = true;
+                    } else {
+                        pos++;
+                    }
+                } else {
+                    if (currentCity.toLowerCase().equals(MainActivity.city.toLowerCase())) {
+                        pos++;
+                    } else {
+                        isHere = true;
+                    }
+                }
+            } else {
+                Date dateDialog = null;
+                try {
+                    dateDialog = format.parse(lastDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (dateNew.compareTo(dateDialog) > 0) {
+                    isHere = true;
+                } else {
+                    pos++;
+                }
+            }
+        }
+
         listItems.add(pos, item);
         notifyItemInserted(pos);
     }
@@ -427,7 +549,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             mRootRef.getReference("users").child(postOwner).runTransaction(new Transaction.Handler() {
                                 @Override
                                 public Transaction.Result doTransaction(MutableData mutableData) {
-                                    OneSignalUtil.sendLikePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
+                                    BackendlessUtil.sendLikePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
 
                                     return Transaction.success(mutableData);
                                 }
@@ -867,8 +989,8 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 @Override
                                 public Transaction.Result doTransaction(MutableData mutableData) {
 
-                                    OneSignalUtil.sendSharePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
-                                    OneSignalUtil.sendNewPostPush(postId, userId, MainActivity.locale);
+                                    BackendlessUtil.sendSharePush((HashMap<String, Object>) mutableData.getValue(), postId, userId);
+                                    BackendlessUtil.sendNewPostPush(postId, userId, MainActivity.locale);
                                     return Transaction.success(mutableData);
                                 }
 

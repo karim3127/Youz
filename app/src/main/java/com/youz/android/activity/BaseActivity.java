@@ -52,6 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             HashMap<String, Object> status = new HashMap<>();
             status.put("status", "online");
+            status.put("BackendlessDeviceId", prefs.getString("DeviceId", ""));
             mUserRef.updateChildren(status);
         }
     }
@@ -68,6 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             HashMap<String, Object> status = new HashMap<>();
             status.put("status", "offline");
+            status.put("BackendlessDeviceId", prefs.getString("DeviceId", ""));
             mUserRef.updateChildren(status);
 
             //Crouton.cancelAllCroutons();

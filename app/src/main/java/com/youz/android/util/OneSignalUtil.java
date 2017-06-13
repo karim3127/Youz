@@ -6,7 +6,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.onesignal.OneSignal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 public class OneSignalUtil {
 
-    public static void sendLikePush(HashMap<String, Object> membersDetails, String postId, String userId) {
+    /*public static void sendLikePush(HashMap<String, Object> membersDetails, String postId, String userId) {
 
         if ((boolean) membersDetails.get("notifsLikes") && membersDetails.get("status").equals("offline")) {
             List<String> userIds = new ArrayList<>();
@@ -197,5 +196,5 @@ public class OneSignalUtil {
         };
         mContactRef.addListenerForSingleValueEvent(valueEventListenerContact);
 
-    }
+    }*/
 }

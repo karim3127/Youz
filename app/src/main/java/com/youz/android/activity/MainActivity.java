@@ -400,7 +400,14 @@ public class MainActivity extends BaseActivity {
                 imgTags.setVisibility(View.GONE);
                 imgSetting.setVisibility(View.VISIBLE);
 
-                homeProfilFragment.vpProfil.setCurrentItem(0);
+
+
+                if(!theLanguageisEnglish) {
+                    homeProfilFragment.vpProfil.setCurrentItem(2);
+                } else {
+                    homeProfilFragment.vpProfil.setCurrentItem(0);
+                }
+
                 homeProfilPostsFragment.rvPosts.post(new Runnable() {
                     @Override
                     public void run() {

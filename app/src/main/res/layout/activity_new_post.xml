@@ -169,7 +169,7 @@
                         android:id="@+id/img_share_to"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_popular_selected"
+                        android:src="@drawable/ic_friend_selected"
                         android:layout_marginLeft="4dp"
                         android:padding="2dp" />
 

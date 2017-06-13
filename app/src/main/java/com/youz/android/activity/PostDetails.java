@@ -56,8 +56,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
 import com.youz.android.fragment.HomeNotifFragment;
 import com.youz.android.fragment.HomeRecentFriendsFragment;
+import com.youz.android.util.BackendlessUtil;
 import com.youz.android.util.ConnectionDetector;
-import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilDateTime;
 import com.youz.android.util.UtilUserAvatar;
 import com.youz.android.view.hashtaghelper.HashTagHelper;
@@ -287,7 +287,7 @@ public class PostDetails extends BaseActivity {
 
                         mAlertRef.updateChildren(alertItem);
 
-                        OneSignalUtil.sendLikePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
+                        BackendlessUtil.sendLikePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
                     }
 
                     nbLikes++;
@@ -624,7 +624,7 @@ public class PostDetails extends BaseActivity {
 
                 mAlertRef.updateChildren(alertItem);
 
-                OneSignalUtil.sendCommentPush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
+                BackendlessUtil.sendCommentPush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
             }
         } else {
             if (!connectionDetector.isConnectingToInternet()) {
@@ -1361,7 +1361,7 @@ public class PostDetails extends BaseActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getValue() != null) {
-                                    OneSignalUtil.sendReplyPush((HashMap<String, Object>) dataSnapshot.getValue(), currentPost.first, userId);
+                                    BackendlessUtil.sendReplyPush((HashMap<String, Object>) dataSnapshot.getValue(), currentPost.first, userId);
                                 }
                             }
 
@@ -2151,8 +2151,8 @@ public class PostDetails extends BaseActivity {
 
                         mAlertRef.updateChildren(alertItem);
 
-                        OneSignalUtil.sendSharePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
-                        OneSignalUtil.sendNewPostPush(currentPost.first, userId, MainActivity.locale);
+                        BackendlessUtil.sendSharePush((HashMap<String, Object>) dataSnapshotUser.getValue(), currentPost.first, userId);
+                        BackendlessUtil.sendNewPostPush(currentPost.first, userId, MainActivity.locale);
                     }
                 }
             }

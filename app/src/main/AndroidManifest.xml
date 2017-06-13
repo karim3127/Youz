@@ -31,12 +31,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.youz.android.permission.C2D_MESSAGE"/>
+    <permission android:name="com.youz.android.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
 
     <application
         android:name="com.youz.android.SecretApplication"
@@ -166,18 +167,15 @@
             android:exported="true"
             android:enabled="true"
             android:stopWithTask="false" />
-        <service
-            android:name=".service.NotificationExtenderExample"
-            android:exported="true"
-            android:enabled="true"
-            android:stopWithTask="false">
-            <intent-filter>
-                <action android:name="com.onesignal.NotificationExtender" />
-            </intent-filter>
-        </service>
 
-        <meta-data android:name="com.onesignal.BadgeCount" android:value="DISABLE" />
-        <meta-data android:name="com.onesignal.NotificationAccentColor.DEFAULT" android:value="FF2354a2" />
+        <receiver android:name=".receiver.MyBackendlessPushBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.youz.android"/>
+            </intent-filter>
+        </receiver>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
     </application>

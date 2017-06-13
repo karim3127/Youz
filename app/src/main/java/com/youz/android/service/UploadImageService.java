@@ -22,19 +22,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.onesignal.OneSignal;
 import com.youz.android.R;
 import com.youz.android.activity.ChatMessage;
-import com.youz.android.util.OneSignalUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.youz.android.util.BackendlessUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -162,7 +156,7 @@ public class UploadImageService extends Service {
                         });
 
                         if (ChatMessage.dataSnapshotUser != null) {
-                            OneSignalUtil.sendNewMessagePush((HashMap<String, Object>) ChatMessage.dataSnapshotUser.getValue(), chatId, userId);
+                            BackendlessUtil.sendNewMessagePush((HashMap<String, Object>) ChatMessage.dataSnapshotUser.getValue(), chatId, userId);
 
                         }
 

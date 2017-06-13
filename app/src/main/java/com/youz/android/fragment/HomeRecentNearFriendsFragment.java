@@ -157,7 +157,7 @@ public class HomeRecentNearFriendsFragment extends Fragment {
                         }
                         if (!isHere) {
                             Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
-                            adapter.addItemInRightPosition(item);
+                            adapter.addNearByItemInRightPosition(item);
                         }
                     }
                 }
@@ -205,7 +205,7 @@ public class HomeRecentNearFriendsFragment extends Fragment {
                 } else {
                     if (!isBlocked && isPublic && !isMyPost) {
                         Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
-                        adapter.addItemInRightPosition(item);
+                        adapter.addNearByItemInRightPosition(item);
                     }
                     scrollUp();
                 }

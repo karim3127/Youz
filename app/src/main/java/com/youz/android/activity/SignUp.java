@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.onesignal.OneSignal;
 import com.youz.android.R;
 import com.youz.android.adapter.CodeCountryPopUpItemAdapter;
 import com.youz.android.model.Country;
@@ -97,7 +95,7 @@ public class SignUp extends AppCompatActivity {
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
-    private String oneSignalUserId = "";
+
 
     String phoneNumber;
     String codeConfirm;
@@ -165,15 +163,6 @@ public class SignUp extends AppCompatActivity {
                 } else {
                     tvNext.setBackgroundResource(R.drawable.back_rounded_disable);
                 }
-            }
-        });
-
-        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
-            @Override
-            public void idsAvailable(String userId, String registrationId) {
-                Log.d("debug", "User:" + userId);
-                if (registrationId != null)
-                    oneSignalUserId = userId;
             }
         });
 
@@ -336,7 +325,7 @@ public class SignUp extends AppCompatActivity {
                     HashMap<String, Object> result = new HashMap<>();
                     result.put("status", "offline");
                     result.put("location", country);
-                    result.put("oneSignalUserId", oneSignalUserId);
+                    result.put("BackendlessDeviceId", prefs.getString("DeviceId", ""));
                     result.put("notifsChats", notifsChats);
                     result.put("notifsComments", notifsComments);
                     result.put("notifsLikes", notifsLikes);
@@ -384,7 +373,7 @@ public class SignUp extends AppCompatActivity {
                     result.put("status", "online");
                     result.put("location", country);
                     result.put("createdAt", date_createdAt);
-                    result.put("oneSignalUserId", oneSignalUserId);
+                    result.put("BackendlessDeviceId", prefs.getString("DeviceId", ""));
                     result.put("notifsChats", true);
                     result.put("notifsComments", true);
                     result.put("notifsLikes", true);

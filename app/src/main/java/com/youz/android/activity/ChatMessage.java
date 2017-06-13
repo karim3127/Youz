@@ -57,8 +57,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
 import com.youz.android.adapter.MessageItemAdapter;
 import com.youz.android.service.UploadImageService;
+import com.youz.android.util.BackendlessUtil;
 import com.youz.android.util.ConnectionDetector;
-import com.youz.android.util.OneSignalUtil;
 import com.youz.android.util.UtilUserAvatar;
 import com.youz.android.view.SuperSwipeRefreshLayout;
 import com.youz.android.view.paperonboarding.listeners.AnimatorEndListener;
@@ -746,7 +746,7 @@ public class ChatMessage extends BaseActivity {
                 }
             });
 
-            OneSignalUtil.sendNewMessagePush((HashMap<String, Object>) dataSnapshotUser.getValue(), chatId, userId);
+            BackendlessUtil.sendNewMessagePush((HashMap<String, Object>) dataSnapshotUser.getValue(), chatId, userId);
 
             etMessage.setText("");
 
