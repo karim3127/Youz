@@ -386,12 +386,12 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             HashMap<String, Object> dialogCurrent = listItems.get(pos).second;
 
-            String currentCity = (dialogCurrent.get("city") != null) ? ((String) dialogCurrent.get("city")).toLowerCase() : "";
+            String currentCity = (dialogCurrent.get("city") != null) ? ((String) dialogCurrent.get("city")).toLowerCase().trim() : "";
             String lastDate = (String) dialogCurrent.get("createdAt");
 
 
             if (MainActivity.city != null && !MainActivity.city.isEmpty()) {
-                if (itemCity.equals(MainActivity.city.toLowerCase()) && currentCity.equals(MainActivity.city.toLowerCase())) {
+                if (itemCity.equals(MainActivity.city.toLowerCase().trim()) && currentCity.equals(MainActivity.city.toLowerCase().trim())) {
                     Date dateDialog = null;
                     try {
                         dateDialog = format.parse(lastDate);
