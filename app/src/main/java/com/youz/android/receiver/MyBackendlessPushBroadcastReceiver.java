@@ -36,7 +36,9 @@ public class MyBackendlessPushBroadcastReceiver extends BackendlessBroadcastRece
                 Intent notificationIntent = new Intent(context, MainActivity.class);
                 notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                String title = "";
                 if (bundle != null) {
+                    title = intent.getStringExtra("android-content-title");
                     if (bundle.get("chatId") != null) {
                         notificationIntent.putExtra("chatId", bundle.getString("chatId"));
                     } else if (bundle.get("postId") != null) {
@@ -51,7 +53,7 @@ public class MyBackendlessPushBroadcastReceiver extends BackendlessBroadcastRece
                 PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(contentIntent);
                 builder.setContentText("Youz");
-                builder.setContentTitle("Youz");
+                builder.setContentTitle(title);
                 builder.setAutoCancel(true);
                 builder.setSmallIcon(R.drawable.ic_stat_onesignal_default);
                 builder.setColor(context.getResources().getColor(R.color.colorPrimary));
