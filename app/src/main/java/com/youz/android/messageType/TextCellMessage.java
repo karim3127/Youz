@@ -14,6 +14,7 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.google.firebase.database.DatabaseReference;
 import com.youz.android.R;
+import com.youz.android.fragment.HomeMessageFragment;
 import com.youz.android.util.UtilUserAvatar;
 
 import java.text.ParseException;
@@ -87,7 +88,7 @@ public class TextCellMessage {
             ivUser.setVisibility(View.INVISIBLE);
         } else {
             ivUser.setVisibility(View.VISIBLE);
-            int res = UtilUserAvatar.getDrawableRes(context, userId);
+            int res = UtilUserAvatar.getAvatarRes(userId, HomeMessageFragment.hashMapAvatar);
             ivUser.setImageResource(res);
         }
 

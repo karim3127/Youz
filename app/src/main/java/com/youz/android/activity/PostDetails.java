@@ -155,6 +155,7 @@ public class PostDetails extends BaseActivity {
     private SharedPreferences prefs;
     private String userId;
     String postOwner;
+    HashMap<String, Integer> hashMapAvatar = new HashMap<>();
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mChatRef;
@@ -463,7 +464,7 @@ public class PostDetails extends BaseActivity {
                 ivCommentOwner.setImageResource(R.drawable.av_admin);
                 tvCommentText.setTextColor(getResources().getColor(R.color.colorGreen));
             } else {
-                int res = UtilUserAvatar.getDrawableRes(this, userId);
+                int res = UtilUserAvatar.getAvatarRes(userId, hashMapAvatar);
                 ivCommentOwner.setImageResource(res);
             }
 
@@ -933,7 +934,7 @@ public class PostDetails extends BaseActivity {
                 ivCommentOwner.setImageResource(R.drawable.av_admin);
                 tvCommentText.setTextColor(getResources().getColor(R.color.colorGreen));
             } else {
-                int res = UtilUserAvatar.getDrawableRes(this, (String) itemDetails.get("commentOwner"));
+                int res = UtilUserAvatar.getAvatarRes((String) itemDetails.get("commentOwner"), hashMapAvatar);
                 ivCommentOwner.setImageResource(res);
             }
 
@@ -1176,7 +1177,7 @@ public class PostDetails extends BaseActivity {
                 ivSubCommentOwner.setImageResource(R.drawable.av_admin);
                 tvSubCommentText.setTextColor(getResources().getColor(R.color.colorGreen));
             } else {
-                int res = UtilUserAvatar.getDrawableRes(this, itemDetails.get("commentOwner") + "");
+                int res = UtilUserAvatar.getAvatarRes(itemDetails.get("commentOwner") + "", hashMapAvatar);
                 ivSubCommentOwner.setImageResource(res);
             }
 
@@ -1423,7 +1424,7 @@ public class PostDetails extends BaseActivity {
             ivSubCommentOwner.setImageResource(R.drawable.av_admin);
             tvSubCommentText.setTextColor(getResources().getColor(R.color.colorGreen));
         } else {
-            int res = UtilUserAvatar.getDrawableRes(this, userId);
+            int res = UtilUserAvatar.getAvatarRes(userId, hashMapAvatar);
             ivSubCommentOwner.setImageResource(res);
         }
 

@@ -56,6 +56,7 @@ import com.rey.material.widget.RadioButton;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youz.android.R;
 import com.youz.android.adapter.MessageItemAdapter;
+import com.youz.android.fragment.HomeMessageFragment;
 import com.youz.android.service.UploadImageService;
 import com.youz.android.util.BackendlessUtil;
 import com.youz.android.util.ConnectionDetector;
@@ -132,6 +133,7 @@ public class ChatMessage extends BaseActivity {
 
     private String chatId, privateId, chatDeletes;
     boolean hasMessage, isBlocked = false, hasBlock = false;
+    int avatarRes;
     ConnectionDetector connectionDetector;
     private MessageItemAdapter adapter;
     boolean isAbleToSend = false;
@@ -201,7 +203,8 @@ public class ChatMessage extends BaseActivity {
         mBlockingRef = mRootRef.getReference("blocks/" + privateId + "/" + userId);
         checkBlockingContacts();
 
-        int res = UtilUserAvatar.getDrawableRes(this, privateId);
+        int res = UtilUserAvatar.getAvatarRes(privateId, HomeMessageFragment.hashMapAvatar);
+
         ivUser.setImageResource(res);
 
         etMessage.addTextChangedListener(new TextWatcher() {

@@ -147,8 +147,8 @@ public class HomeMessageItemAdapter extends RecyclerView.Adapter<HomeMessageItem
         holder.isBlocked = isBlocked;
         holder.hasBlock = hasBlock;
 
-        int res = UtilUserAvatar.getDrawableRes(context, holder.privateContactId);
-        holder.imgDialog.setImageResource(res);
+        holder.avatarRes = UtilUserAvatar.getAvatarRes(holder.privateContactId, HomeMessageFragment.hashMapAvatar);
+        holder.imgDialog.setImageResource(holder.avatarRes);
 
         if (dialog.get("lastMessageDateSent") != null && !dialog.get("lastMessageDateSent").equals("")) {
 
@@ -238,6 +238,7 @@ public class HomeMessageItemAdapter extends RecyclerView.Adapter<HomeMessageItem
         String privateContactId;
         boolean isBlocked;
         boolean hasBlock;
+        int avatarRes;
 
         public MyViewHolder(View itemView) {
             super(itemView);

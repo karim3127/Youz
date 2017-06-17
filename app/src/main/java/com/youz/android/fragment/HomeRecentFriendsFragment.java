@@ -150,6 +150,9 @@ public class HomeRecentFriendsFragment extends Fragment {
 
     public void getPhoneContacts() {
         contactList = utilContact.getContactList();
+        if (contactList.size() > 0) {
+            getListYouzContact();
+        }
     }
 
     public void getListYouzContact() {

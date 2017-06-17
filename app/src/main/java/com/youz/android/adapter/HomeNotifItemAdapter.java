@@ -58,6 +58,7 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
     DatabaseReference mPostRef = mRootRef.getReference("posts");
     DatabaseReference mAlertRef = mRootRef.getReference("alerts");
     Query mPostQuery;
+    HashMap<String, Integer> hashMapAvatar = new HashMap<>();
 
     public HomeNotifItemAdapter(Context context, List<Pair<String, HashMap<String, Object>>> listItems){
         this.context = context;
@@ -131,7 +132,8 @@ public class HomeNotifItemAdapter extends RecyclerView.Adapter<HomeNotifItemAdap
             }
         }
 
-        int res = UtilUserAvatar.getDrawableRes(context, (String) current.get("userId"));
+        int res = UtilUserAvatar.getAvatarRes((String) current.get("userId"), hashMapAvatar);
+
         holder.imgNotif.setImageResource(res);
 
         mPostQuery = mPostRef.child((String) current.get("postId"));

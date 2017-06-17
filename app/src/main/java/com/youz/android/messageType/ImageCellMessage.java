@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.youz.android.R;
 import com.youz.android.activity.ImageViewer;
+import com.youz.android.fragment.HomeMessageFragment;
 import com.youz.android.util.UtilUserAvatar;
 
 import java.text.ParseException;
@@ -155,7 +156,7 @@ public class ImageCellMessage {
             ivUser.setVisibility(View.INVISIBLE);
         } else {
             ivUser.setVisibility(View.VISIBLE);
-            int res = UtilUserAvatar.getDrawableRes(context, userId);
+            int res = UtilUserAvatar.getAvatarRes(userId, HomeMessageFragment.hashMapAvatar);
             ivUser.setImageResource(res);
         }
 

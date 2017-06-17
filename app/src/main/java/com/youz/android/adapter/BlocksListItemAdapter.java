@@ -55,6 +55,7 @@ public class BlocksListItemAdapter extends RecyclerView.Adapter<BlocksListItemAd
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     DatabaseReference mPostRef = mRootRef.getReference("posts");
     Query mPostQuery;
+    HashMap<String, Integer> hashMapAvatar = new HashMap<>();
 
     public BlocksListItemAdapter(Context context, List<Pair<String, HashMap<String, Object>>> listItems){
         this.context = context;
@@ -101,7 +102,8 @@ public class BlocksListItemAdapter extends RecyclerView.Adapter<BlocksListItemAd
 
         holder.tvDate.setText(UtilDateTime.formatTime(context, createdAt));
 
-        int res = UtilUserAvatar.getDrawableRes(context, holder.blockUserId);
+        int res = UtilUserAvatar.getAvatarRes(holder.blockUserId, hashMapAvatar);
+
         holder.imgBlock.setImageResource(res);
 
         mPostQuery = mPostRef.child((String) current.get("postId"));

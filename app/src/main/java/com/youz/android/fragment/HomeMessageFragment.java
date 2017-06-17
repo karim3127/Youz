@@ -57,6 +57,8 @@ public class HomeMessageFragment extends Fragment {
     Query mQueryChat;
     ChildEventListener childEventListener;
 
+    public static HashMap<String, Integer> hashMapAvatar = new HashMap<>();
+
     public HomeMessageFragment() {
         // Required empty public constructor
     }
@@ -98,6 +100,7 @@ public class HomeMessageFragment extends Fragment {
     @Override
     public void onDestroy() {
         mChatRef.removeEventListener(childEventListener);
+        hashMapAvatar = new HashMap<>();
         super.onDestroy();
     }
 
