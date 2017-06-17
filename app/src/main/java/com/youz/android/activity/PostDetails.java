@@ -408,7 +408,7 @@ public class PostDetails extends BaseActivity {
     public void sendMessage() {
         if (connectionDetector.isConnectingToInternet()) {
             HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-            boolean enablePublicChat = (membersDetails.get("enablePublicChat") != null) ? (boolean) membersDetails.get("enablePublicChat") : true;
+            boolean enablePublicChat = membersDetails.get("enablePublicChat") == null || (boolean) membersDetails.get("enablePublicChat");
             if (enablePublicChat || isHimFriend) {
                 searchPrivateChat(userId, (String) currentPost.second.get("postOwner"));
             } else {
@@ -1538,7 +1538,7 @@ public class PostDetails extends BaseActivity {
                 dataSnapshotUser = dataSnapshot;
 
                 HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
-                boolean enablePublicChat = (membersDetails.get("enablePublicChat") != null) ? (boolean) membersDetails.get("enablePublicChat") : true;
+                boolean enablePublicChat = membersDetails.get("enablePublicChat") == null || (boolean) membersDetails.get("enablePublicChat");
                 if (enablePublicChat || isHimFriend) {
                     if (userId.equals(postOwner)) {
                         ivMessage.setVisibility(View.GONE);

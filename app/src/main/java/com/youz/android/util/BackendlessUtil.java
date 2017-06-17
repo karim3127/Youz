@@ -254,7 +254,7 @@ public class BackendlessUtil {
                             HashMap<String, Object> userDetails = (HashMap<String, Object>) dataSnapshot.getValue();
                             if (userDetails != null && (boolean) userDetails.get("notifsPosts") && userDetails.get("status").equals("offline")) {
                                 if (userDetails.get("BackendlessDeviceId") != null) {
-                                    if (!listUserOneSignalIds.contains((String) userDetails.get("BackendlessDeviceId"))) {
+                                    if (!listUserOneSignalIds.contains(userDetails.get("BackendlessDeviceId"))) {
                                         listUserOneSignalIds.add((String) userDetails.get("BackendlessDeviceId"));
                                     }
                                 }

@@ -158,11 +158,7 @@ public class MainActivity extends BaseActivity {
         defaultLangage = prefs.getString("Langage","en_US");
         broadcaster = LocalBroadcastManager.getInstance(this);
 
-        if (defaultLangage.equals("en_AU")) {
-            theLanguageisEnglish = false;
-        }else{
-            theLanguageisEnglish = true;
-        }
+        theLanguageisEnglish = !defaultLangage.equals("en_AU");
 
         mBlocksRef = mRootRef.getReference("blocks/" + userId);
         getBlockContacts();

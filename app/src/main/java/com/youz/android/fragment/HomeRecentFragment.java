@@ -41,11 +41,7 @@ public class HomeRecentFragment extends Fragment {
         prefs = getActivity().getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         defaultLangage = prefs.getString("Langage","en_US");
 
-        if (defaultLangage.equals("en_AU")) {
-            theLanguageisEnglish = false;
-        }else{
-            theLanguageisEnglish = true;
-        }
+        theLanguageisEnglish = !defaultLangage.equals("en_AU");
 
     }
 

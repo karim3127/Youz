@@ -124,7 +124,7 @@ public class TextCellMessage {
         dialog.cancelText(context.getResources().getColor(R.color.colorRed));
         dialog.cancelTextSize(context.getResources().getInteger(R.integer.option_menu_text_size));
 
-        final ClipboardManager clipboard = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
+        final ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
         if (isMe) {
             dialog.setOnOperItemClickL(new OnOperItemClickL() {

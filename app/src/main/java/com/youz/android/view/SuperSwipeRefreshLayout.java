@@ -247,8 +247,8 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
-        mHeaderViewWidth = (int) display.getWidth();
-        mFooterViewWidth = (int) display.getWidth();
+        mHeaderViewWidth = display.getWidth();
+        mFooterViewWidth = display.getWidth();
         mHeaderViewHeight = (int) (HEADER_VIEW_HEIGHT * metrics.density);
         mFooterViewHeight = (int) (HEADER_VIEW_HEIGHT * metrics.density);
         defaultProgressView = new CircleProgressView(getContext());
@@ -591,13 +591,10 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                 return false;
             }
             int lastPos = absListView.getLastVisiblePosition();
-            if (lastPos > 0 && count > 0 && lastPos == count - 1) {
-                return true;
-            }
-            return false;
+            return lastPos > 0 && count > 0 && lastPos == count - 1;
         } else if (mTarget instanceof ScrollView) {
             ScrollView scrollView = (ScrollView) mTarget;
-            View view = (View) scrollView
+            View view = scrollView
                     .getChildAt(scrollView.getChildCount() - 1);
             if (view != null) {
                 int diff = (view.getBottom() - (scrollView.getHeight() + scrollView
@@ -1188,22 +1185,22 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
      * 下拉刷新回调
      */
     public interface OnPullRefreshListener {
-        public void onRefresh();
+        void onRefresh();
 
-        public void onPullDistance(int distance);
+        void onPullDistance(int distance);
 
-        public void onPullEnable(boolean enable);
+        void onPullEnable(boolean enable);
     }
 
     /**
      * 上拉加载更多
      */
     public interface OnPushLoadMoreListener {
-        public void onLoadMore();
+        void onLoadMore();
 
-        public void onPushDistance(int distance);
+        void onPushDistance(int distance);
 
-        public void onPushEnable(boolean enable);
+        void onPushEnable(boolean enable);
     }
 
     /**

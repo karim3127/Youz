@@ -156,11 +156,7 @@ public class HomeRecentItemAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             String location = (current.get("location") == null) ? "" : (String) current.get("location");
             String city = (current.get("city") != null && !((String) current.get("city")).trim().isEmpty()) ? " - " + ((String) current.get("city")).trim() : "";
 
-            if (current.get("saves") != null && ((HashMap<String, Object>) current.get("saves")).get(userId) != null) {
-                holder.isSaved = true;
-            } else {
-                holder.isSaved = false;
-            }
+            holder.isSaved = current.get("saves") != null && ((HashMap<String, Object>) current.get("saves")).get(userId) != null;
 
             holder.title = title;
             holder.color = color;

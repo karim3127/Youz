@@ -315,12 +315,12 @@ public class SignUp extends AppCompatActivity {
                     HashMap<String, Object> details = (HashMap<String, Object>) dataSnapshot.getValue();
                     final String key = dataSnapshot.getKey();
 
-                    final boolean notifsChats = (details.get("notifsChats") != null) ? (boolean) details.get("notifsChats") : true;
-                    final boolean notifsComments = (details.get("notifsComments") != null) ? (boolean) details.get("notifsComments") : true;
-                    final boolean notifsLikes = (details.get("notifsLikes") != null) ? (boolean) details.get("notifsLikes") : true;
-                    final boolean notifsPosts = (details.get("notifsPosts") != null) ? (boolean) details.get("notifsPosts") : true;
-                    final boolean notifsShares = (details.get("notifsShares") != null) ? (boolean) details.get("notifsShares") : true;
-                    final boolean enablePublicChat = (details.get("enablePublicChat") != null) ? (boolean) details.get("enablePublicChat") : true;
+                    final boolean notifsChats = details.get("notifsChats") == null || (boolean) details.get("notifsChats");
+                    final boolean notifsComments = details.get("notifsComments") == null || (boolean) details.get("notifsComments");
+                    final boolean notifsLikes = details.get("notifsLikes") == null || (boolean) details.get("notifsLikes");
+                    final boolean notifsPosts = details.get("notifsPosts") == null || (boolean) details.get("notifsPosts");
+                    final boolean notifsShares = details.get("notifsShares") == null || (boolean) details.get("notifsShares");
+                    final boolean enablePublicChat = details.get("enablePublicChat") == null || (boolean) details.get("enablePublicChat");
 
                     HashMap<String, Object> result = new HashMap<>();
                     result.put("status", "offline");

@@ -78,7 +78,7 @@ public class HomeMessageItemAdapter extends RecyclerView.Adapter<HomeMessageItem
 
         holder.chatId = listItems.get(position).first;
 
-        if (((HashMap<String, Object>) dialog.get("unreadMessages")) != null && ((HashMap<String, Object>) dialog.get("unreadMessages")).containsKey(userId) && !(((HashMap<String, Object>) dialog.get("unreadMessages")).get(userId) + "").equals("0")) {
+        if (dialog.get("unreadMessages") != null && ((HashMap<String, Object>) dialog.get("unreadMessages")).containsKey(userId) && !(((HashMap<String, Object>) dialog.get("unreadMessages")).get(userId) + "").equals("0")) {
             holder.tvLastMsg.setTypeface(typeFaceGras);
             holder.tvNbUnreadMsg.setVisibility(View.VISIBLE);
             holder.tvNbUnreadMsg.setText(((HashMap<String, Object>) dialog.get("unreadMessages")).get(userId).toString());

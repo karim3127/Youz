@@ -1148,11 +1148,7 @@ public class ChatMessage extends BaseActivity {
         valueEventListenerBlocking = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    isBlocked = true;
-                } else {
-                    isBlocked = false;
-                }
+                isBlocked = dataSnapshot.getValue() != null;
 
                 if (isBlocked || hasBlock) {
                     imgAttach.setEnabled(false);
