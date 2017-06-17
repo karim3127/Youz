@@ -44,6 +44,9 @@ public class BackendlessUtil {
             publishOptions.putHeader("ios-alert", messagePush);
             publishOptions.putHeader("ios-badge", "0");
             publishOptions.putHeader("ios-sound", "default");
+            publishOptions.putHeader("type", "like");
+            publishOptions.putHeader("postId", postId);
+            publishOptions.putHeader("userId", userId);
 
             Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                 @Override
@@ -80,6 +83,9 @@ public class BackendlessUtil {
             publishOptions.putHeader("ios-alert", messagePush);
             publishOptions.putHeader("ios-badge", "0");
             publishOptions.putHeader("ios-sound", "default");
+            publishOptions.putHeader("type", "comment");
+            publishOptions.putHeader("postId", postId);
+            publishOptions.putHeader("userId", userId);
 
             Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                 @Override
@@ -116,6 +122,9 @@ public class BackendlessUtil {
             publishOptions.putHeader("ios-alert", messagePush);
             publishOptions.putHeader("ios-badge", "0");
             publishOptions.putHeader("ios-sound", "default");
+            publishOptions.putHeader("type", "comment");
+            publishOptions.putHeader("postId", postId);
+            publishOptions.putHeader("userId", userId);
 
             Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                 @Override
@@ -152,6 +161,9 @@ public class BackendlessUtil {
             publishOptions.putHeader("ios-alert", messagePush);
             publishOptions.putHeader("ios-badge", "0");
             publishOptions.putHeader("ios-sound", "default");
+            publishOptions.putHeader("type", "share");
+            publishOptions.putHeader("postId", postId);
+            publishOptions.putHeader("userId", userId);
 
             Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                 @Override
@@ -188,6 +200,9 @@ public class BackendlessUtil {
             publishOptions.putHeader("ios-alert", messagePush);
             publishOptions.putHeader("ios-badge", "0");
             publishOptions.putHeader("ios-sound", "default");
+            publishOptions.putHeader("type", "chat");
+            publishOptions.putHeader("chatId", chatId);
+            publishOptions.putHeader("userId", userId);
 
             Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                 @Override
@@ -220,7 +235,7 @@ public class BackendlessUtil {
                 for (Map.Entry<String, Object> user : users.entrySet()) {
                     HashMap<String, Object> userDetails = (HashMap<String, Object>) user.getValue();
                     if (userDetails != null && (boolean) userDetails.get("notifsPosts") && userDetails.get("status").equals("offline")) {
-                        if (userDetails.get("BackendlessDeviceId") != null) {
+                        if (userDetails.get("BackendlessDeviceId") != null && !user.getKey().equals(userId)) {
                             if (!listUserOneSignalIds.contains(userDetails.get("BackendlessDeviceId"))) {
                                 listUserOneSignalIds.add((String) userDetails.get("BackendlessDeviceId"));
                             }
@@ -253,7 +268,7 @@ public class BackendlessUtil {
 
                             HashMap<String, Object> userDetails = (HashMap<String, Object>) dataSnapshot.getValue();
                             if (userDetails != null && (boolean) userDetails.get("notifsPosts") && userDetails.get("status").equals("offline")) {
-                                if (userDetails.get("BackendlessDeviceId") != null) {
+                                if (userDetails.get("BackendlessDeviceId") != null && !dataSnapshot.getKey().equals(userId)) {
                                     if (!listUserOneSignalIds.contains(userDetails.get("BackendlessDeviceId"))) {
                                         listUserOneSignalIds.add((String) userDetails.get("BackendlessDeviceId"));
                                     }
@@ -274,6 +289,9 @@ public class BackendlessUtil {
                                 publishOptions.putHeader("ios-alert", messagePush);
                                 publishOptions.putHeader("ios-badge", "0");
                                 publishOptions.putHeader("ios-sound", "default");
+                                publishOptions.putHeader("type", "post");
+                                publishOptions.putHeader("postId", postId);
+                                publishOptions.putHeader("userId", userId);
 
                                 Backendless.Messaging.publish(messagePush, publishOptions, deliveryOptions, new AsyncCallback<MessageStatus>() {
                                     @Override
