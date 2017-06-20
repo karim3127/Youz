@@ -407,7 +407,7 @@ public class PostDetails extends BaseActivity {
 
     @OnClick(R.id.iv_message)
     public void sendMessage() {
-        if (connectionDetector.isConnectingToInternet()) {
+        if (connectionDetector.isConnectingToInternet() && dataSnapshotUser != null && dataSnapshotUser.getValue() != null) {
             HashMap<String, Object> membersDetails = (HashMap<String, Object>) dataSnapshotUser.getValue();
             boolean enablePublicChat = membersDetails.get("enablePublicChat") == null || (boolean) membersDetails.get("enablePublicChat");
             if (enablePublicChat || isHimFriend) {
