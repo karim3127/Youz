@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 @ReportsCrashes(
         formUri = "",
-        mailTo = "faresyaakoub@gmail.com"
+        mailTo = "abdelkrim1906@gmail.com"
 )
 
 public class SecretApplication extends Application {
