@@ -122,8 +122,9 @@ public class TagPosts extends BaseActivity {
 
                         String postOwner = (String) postDetails.get("postOwner");
                         boolean isFriend = HomeRecentFriendsFragment.listYouzContacts.contains(postOwner);
+                        boolean isMine = postOwner.equals(userId);
 
-                        if (!isBlocked && (isPublic || isFriend)) {
+                        if (!isBlocked && (isPublic || isFriend || isMine)) {
                             Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
                             adapter.addTagPostItemInRightPosition(item);
                             scrollUp();
@@ -172,8 +173,9 @@ public class TagPosts extends BaseActivity {
 
                             String postOwner = (String) postDetails.get("postOwner");
                             boolean isFriend = HomeRecentFriendsFragment.listYouzContacts.contains(postOwner);
+                            boolean isMine = postOwner.equals(userId);
 
-                            if (!isBlocked && (isPublic || isFriend)) {
+                            if (!isBlocked && (isPublic || isFriend || isMine)) {
                                 Pair<String, HashMap<String, Object>> item = new Pair<>(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
                                 adapter.listItems.set(i, item);
                                 adapter.notifyItemChanged(i);

@@ -37,6 +37,7 @@ public class MessageItemAdapter extends RecyclerView.Adapter<MessageItemAdapter.
     SharedPreferences prefs;
     SimpleDateFormat format;
     String userId;
+    String chatId;
 
     FirebaseDatabase mRootRef = FirebaseDatabase.getInstance();
     private final DatabaseReference mMessageRef;
@@ -45,6 +46,8 @@ public class MessageItemAdapter extends RecyclerView.Adapter<MessageItemAdapter.
         this.listItems = listItems;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.chatId = chatId;
+
         prefs = context.getSharedPreferences("com.youz.android", Context.MODE_PRIVATE);
         userId = prefs.getString("UserId", "");
 
@@ -118,11 +121,11 @@ public class MessageItemAdapter extends RecyclerView.Adapter<MessageItemAdapter.
             }
 
             if (messageDetails.get("type").equals("text")) {
-                messageView = TextCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, messageDetails.get("senderId").toString(), likesQuery);
+                messageView = TextCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, chatId, likesQuery);
                 holder.chatItemContainer.addView(messageView);
 
             } else if (messageDetails.get("type").equals("image")) {
-                messageView = ImageCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, messageDetails.get("senderId").toString(), likesQuery);
+                messageView = ImageCellMessage.createThemCellMessage(parent, LayoutInflater.from(context), messageDetails, isLastOwnerMsg, chatId, likesQuery);
                 holder.chatItemContainer.addView(messageView);
 
             }

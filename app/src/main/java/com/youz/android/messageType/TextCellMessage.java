@@ -62,7 +62,7 @@ public class TextCellMessage {
         return v;
     }
 
-    public static View createThemCellMessage(ViewGroup cellView, LayoutInflater layoutInflater, final HashMap<String, Object> message, boolean isLastOwnerMsg, final String userId, final DatabaseReference messageQuery) {
+    public static View createThemCellMessage(ViewGroup cellView, LayoutInflater layoutInflater, final HashMap<String, Object> message, boolean isLastOwnerMsg, final String chatId, final DatabaseReference messageQuery) {
         final Context context = cellView.getContext();
         final View v = layoutInflater.inflate(R.layout.message_them_text_item, cellView, false);
 
@@ -88,7 +88,7 @@ public class TextCellMessage {
             ivUser.setVisibility(View.INVISIBLE);
         } else {
             ivUser.setVisibility(View.VISIBLE);
-            int res = UtilUserAvatar.getAvatarRes(userId, HomeMessageFragment.hashMapAvatar);
+            int res = UtilUserAvatar.getAvatarRes(chatId, HomeMessageFragment.hashMapAvatar);
             ivUser.setImageResource(res);
         }
 

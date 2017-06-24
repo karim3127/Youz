@@ -203,7 +203,7 @@ public class ChatMessage extends BaseActivity {
         mBlockingRef = mRootRef.getReference("blocks/" + privateId + "/" + userId);
         checkBlockingContacts();
 
-        int res = UtilUserAvatar.getAvatarRes(privateId, HomeMessageFragment.hashMapAvatar);
+        int res = UtilUserAvatar.getAvatarRes(chatId, HomeMessageFragment.hashMapAvatar);
 
         ivUser.setImageResource(res);
 
